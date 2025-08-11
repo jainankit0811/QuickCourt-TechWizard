@@ -1,11 +1,11 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
-import BookingOverview from "../screen/BookingOverview.jsx";
-import CourtManagement from "../screen/CourtManagement.jsx";
-import Dashboard from "../screen/Dashboard";
-import FacilityManagement from "../screen/FacilityManagement.jsx";
-import Profile from "../screen/Profile.jsx";
-import TimeSlotManagement from "../screen/TimeSlotManagement.jsx";
+import BookingOverview from "../screen/owner/BookingOverview.jsx";
+import CourtManagement from "../screen/owner/CourtManagement.jsx";
+import Dashboard from "../screen/owner/Dashboard.jsx";
+import FacilityManagement from "../screen/owner/FacilityManagement.jsx";
+import Profile from "../screen/owner/Profile.jsx";
+import TimeSlotManagement from "../screen/owner/TimeSlotManagement.jsx";
 const OwnerRoutes = () => {
     return (
         <div>

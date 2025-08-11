@@ -1,6 +1,6 @@
 import { Calendar, Clock, Filter, MapPin, Search, User } from 'lucide-react';
 import { useState } from 'react';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
 const BookingOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');

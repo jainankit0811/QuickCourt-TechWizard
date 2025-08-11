@@ -1,6 +1,6 @@
 import { Clock, DollarSign, Edit, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
 const CourtManagement = () => {
   const [courts] = useState([
@@ -103,13 +103,12 @@ const CourtManagement = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      court.status === 'Available' 
-                        ? 'bg-green-100 text-green-800' 
-                        : court.status === 'Maintenance'
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${court.status === 'Available'
+                      ? 'bg-green-100 text-green-800'
+                      : court.status === 'Maintenance'
                         ? 'bg-yellow-100 text-yellow-800'
                         : 'bg-red-100 text-red-800'
-                    }`}>
+                      }`}>
                       {court.status}
                     </span>
                   </td>

@@ -1,6 +1,6 @@
 import { AlertTriangle, Clock, Settings } from 'lucide-react';
 import { useState } from 'react';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
 const TimeSlotManagement = () => {
   const [selectedCourt, setSelectedCourt] = useState('Tennis Court A');

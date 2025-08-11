@@ -1,7 +1,7 @@
 import { Building2, Edit2, Mail, MapPin, Phone, Save, User, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import Button from '../components/Button';
-import { getProfile, upsertProfile } from '../services/profile.service';
+import Button from '../../components/Button';
+import { getProfile, upsertProfile } from '../../services/profile.service';
 
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);

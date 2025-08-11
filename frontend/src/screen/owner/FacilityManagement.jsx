@@ -1,7 +1,7 @@
 import { Edit, MapPin, Plus, Trash2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import Button from '../components/Button';
-import { addFacility, getFacilities } from '../services/facility.service';
+import Button from '../../components/Button';
+import { addFacility, getFacilities } from '../../services/facility.service';
 
 const FacilityManagement = () => {
   const [facilities, setFacilities] = useState([]);

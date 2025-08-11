@@ -1,6 +1,6 @@
 import { Activity, Calendar, DollarSign, Users } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import KPICard from '../components/KPICard';
+import KPICard from '../../components/KPICard';
 
 const Dashboard = () => {
     // Sample data for charts
