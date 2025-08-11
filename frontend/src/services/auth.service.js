@@ -1,99 +1,87 @@
+
+
 import axios from '../config/axios.js';
 
-// Authentication service
 export const authService = {
-    // Login user
-    login: async (credentials) => {
-        try {
-            const response = await axios.post('http://localhost:3000/auth/login', credentials);
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-            }
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    // Register user
-    register: async (userData) => {
-        try {
-            const response = await axios.post('http://localhost:3000/auth/register', userData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    // Logout user
-    logout: () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-    },
-
-    // Get current user
-    getCurrentUser: () => {
-        const user = localStorage.getItem('user');
-        return user ? JSON.parse(user) : null;
-    },
-
-    // Check if user is authenticated
-    isAuthenticated: () => {
-        const token = localStorage.getItem('token');
-        return !!token;
-    },
-
-    // Get auth token
-    getToken: () => {
-        return localStorage.getItem('token');
-    },
-
-    // Refresh token if needed
-    refreshToken: async () => {
-        try {
-            const response = await axios.post('http://localhost:3000/auth/refresh');
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-            }
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+  login: async (credentials) => {
+    try {
+      const response = await axios.post('http://localhost:3001/api/auth/login', credentials);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+      return response.data; // Returns token and user (including role)
+    } catch (error) {
+      throw error.response?.data?.message || 'Login failed';
     }
+  },
+
+  register: async (userData) => {
+    try {
+      const formData = new FormData();
+      Object.keys(userData).forEach((key) => {
+        if (key === 'avatar' && userData[key]) {
+          formData.append('avatar', userData[key]);
+        } else {
+          formData.append(key, userData[key]);
+        }
+      });
+      const response = await axios.post('http://localhost:3001/api/auth/signup', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+      return response.data; // Returns token and user (including role)
+    } catch (error) {
+      throw error.response?.data?.message || 'Signup failed';
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axios.post('/api/auth/logout');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } catch (error) {
+      throw error.response?.data?.message || 'Logout failed';
+    }
+  },
+
+  getCurrentUser: () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  },
+
+  isAuthenticated: () => {
+    const token = localStorage.getItem('token');
+    return !!token;
+  },
+
+  getToken: () => {
+    return localStorage.getItem('token');
+  },
 };
 
-// User profile service
 export const userService = {
-    // Get user profile
-    getProfile: async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/users/profile');
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    // Update user profile
-    updateProfile: async (userData) => {
-        try {
-            const response = await axios.put('http://localhost:3000/users/profile', userData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    // Change password
-    changePassword: async (passwordData) => {
-        try {
-            const response = await axios.put('http://localhost:3000/users/change-password', passwordData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+  getProfile: async () => {
+    try {
+      const response = await axios.get('/profile');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data?.message || 'Failed to fetch profile';
     }
+  },
+
+  updateProfile: async (userData) => {
+    try {
+      const response = await axios.put('/profile', userData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data?.message || 'Failed to update profile';
+    }
+  },
 };
 
 export default { authService, userService };

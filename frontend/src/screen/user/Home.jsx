@@ -2,7 +2,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import searchloc from "../../assets/searchloc.png";
-import Navbar from '../../components/Navbar';
 
 function Home() {
   const venueRef = useRef(null);
@@ -51,7 +50,6 @@ function Home() {
     <div className="min-h-screen bg-white font-sans px-10">
       {/* Header */}
 
-      <Navbar />
 
       {/* Main Section */}
       <main className="flex flex-col md:flex-row items-center justify-between px-10 py-12 bg-white gap-8">
