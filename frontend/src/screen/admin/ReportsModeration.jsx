@@ -6,17 +6,19 @@ const ReportsModeration = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterPriority, setFilterPriority] = useState('all');
 
-  const filteredReports = reportsData.filter(report => {
+  // Filter reports based on selected filters
+  const filteredReports = reportsData.filter((report) => {
     const matchesStatus = filterStatus === 'all' || report.status === filterStatus;
     const matchesPriority = filterPriority === 'all' || report.priority === filterPriority;
-
     return matchesStatus && matchesPriority;
   });
 
+  // Handle actions on reports
   const handleReportAction = (reportId, action) => {
     console.log(`${action} report ${reportId}`);
   };
 
+  // Status icon
   const getStatusIcon = (status) => {
     switch (status) {
       case 'pending':
@@ -30,10 +32,11 @@ const ReportsModeration = () => {
     }
   };
 
+  // Status colors
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
-        return 'bg-[#fff7ed] text-[#9a3412]0';
+        return 'bg-[#fff7ed] text-[#9a3412]';
       case 'investigating':
         return 'bg-[#e0f2fe] text-[#075985]';
       case 'resolved':
@@ -43,6 +46,7 @@ const ReportsModeration = () => {
     }
   };
 
+  // Priority colors
   const getPriorityColor = (priority) => {
     switch (priority) {
       case 'high':
@@ -58,11 +62,12 @@ const ReportsModeration = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-[#212121]">Reports & Moderation</h1>
         <div className="flex items-center space-x-4">
           <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
-            {filteredReports.filter(r => r.status === 'pending').length} Pending
+            {filteredReports.filter((r) => r.status === 'pending').length} Pending
           </div>
         </div>
       </div>
@@ -70,12 +75,13 @@ const ReportsModeration = () => {
       {/* Filters */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Status Filter */}
           <div>
             <label className="block text-sm font-medium text-[#424242] mb-2">Status</label>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full p-2 border border-[#f5f5f5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
+              className="w-full p-2 border border-[#f5f5f5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] text-black"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -84,12 +90,13 @@ const ReportsModeration = () => {
             </select>
           </div>
 
+          {/* Priority Filter */}
           <div>
             <label className="block text-sm font-medium text-[#424242] mb-2">Priority</label>
             <select
               value={filterPriority}
               onChange={(e) => setFilterPriority(e.target.value)}
-              className="w-full p-2 border border-[#e5e5e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
+              className="w-full p-2 border border-[#e5e5e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] text-black"
             >
               <option value="all">All Priorities</option>
               <option value="high">High</option>
@@ -103,15 +110,27 @@ const ReportsModeration = () => {
       {/* Reports List */}
       <div className="space-y-4">
         {filteredReports.map((report) => (
-          <div key={report.id} className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]">
+          <div
+            key={report.id}
+            className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]"
+          >
             <div className="flex items-start justify-between">
               <div className="flex-1">
+                {/* Status & Priority */}
                 <div className="flex items-center space-x-3 mb-3">
-                  <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
+                  <div
+                    className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                      report.status
+                    )}`}
+                  >
                     {getStatusIcon(report.status)}
                     <span className="ml-1">{report.status}</span>
                   </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(report.priority)}`}>
+                  <div
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(
+                      report.priority
+                    )}`}
+                  >
                     {report.priority} priority
                   </div>
                   <span className="text-xs text-[#757575]">
@@ -119,6 +138,7 @@ const ReportsModeration = () => {
                   </span>
                 </div>
 
+                {/* Reporter Info */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div>
                     <p className="text-sm font-medium text-[#212121]">Reporter</p>
@@ -130,10 +150,13 @@ const ReportsModeration = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-[#212121]">Date</p>
-                    <p className="text-[#616161]">{new Date(report.date).toLocaleDateString()}</p>
+                    <p className="text-[#616161]">
+                      {new Date(report.date).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
 
+                {/* Description */}
                 <div className="mb-4">
                   <p className="text-sm font-medium text-[#212121] mb-1">Description</p>
                   <p className="text-[#616161]">{report.description}</p>
@@ -141,6 +164,7 @@ const ReportsModeration = () => {
               </div>
             </div>
 
+            {/* Action Buttons */}
             {report.status !== 'resolved' && (
               <div className="flex space-x-3 pt-4 border-t border-[#e5e5e5]">
                 {report.status === 'pending' && (
@@ -172,6 +196,7 @@ const ReportsModeration = () => {
           </div>
         ))}
 
+        {/* No Reports Found */}
         {filteredReports.length === 0 && (
           <div className="text-center py-12">
             <Flag className="h-12 w-12 text-[#9e9e9e] mx-auto mb-4" />

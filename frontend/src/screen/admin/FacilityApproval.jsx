@@ -11,8 +11,8 @@ const schema = yup.object({
   comments: yup.string().when('action', {
     is: 'reject',
     then: (schema) => schema.required('Comments are required for rejection'),
-    otherwise: (schema) => schema.notRequired()
-  })
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 const FacilityApproval = () => {
@@ -20,8 +20,14 @@ const FacilityApproval = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
-    resolver: yupResolver(schema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
   const actionValue = watch('action');
@@ -41,6 +47,7 @@ const FacilityApproval = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-[#212121]">Facility Approval</h1>
         <div className="bg-[#ffedd5] text-[#9a3412] px-3 py-1 rounded-full text-sm font-medium">
@@ -48,9 +55,13 @@ const FacilityApproval = () => {
         </div>
       </div>
 
+      {/* Facility Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pendingFacilities.map((facility) => (
-          <div key={facility.id} className="bg-white rounded-lg shadow-sm border border-[#bae6fd] overflow-hidden hover:shadow-md transition-shadow duration-200">
+          <div
+            key={facility.id}
+            className="bg-white rounded-lg shadow-sm border border-[#bae6fd] overflow-hidden hover:shadow-md transition-shadow duration-200"
+          >
             <div className="aspect-video bg-[#bae6fd] overflow-hidden">
               <img
                 src={facility.images[0]}
@@ -126,8 +137,11 @@ const FacilityApproval = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`aspect-square bg-[#bae6fd] rounded-lg overflow-hidden border-2 ${selectedImageIndex === index ? 'border-[#0ea5e9]' : 'border-transparent'
-                        }`}
+                      className={`aspect-square bg-[#bae6fd] rounded-lg overflow-hidden border-2 ${
+                        selectedImageIndex === index
+                          ? 'border-[#0ea5e9]'
+                          : 'border-transparent'
+                      }`}
                     >
                       <img
                         src={image}
@@ -197,55 +211,80 @@ const FacilityApproval = () => {
               </div>
 
               {/* Action Form */}
-              <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 pt-4 border-t border-[#bae6fd]">
+              <form
+                onSubmit={handleSubmit(handleFormSubmit)}
+                className="space-y-4 pt-4 border-t border-[#bae6fd]"
+              >
+                {/* Select with visible text */}
                 <div>
                   <label className="block text-sm font-medium text-[#424242] mb-2">
                     Action
                   </label>
                   <select
                     {...register('action')}
-                    className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
+                    className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] text-black"
                   >
-                    <option value="">Select action...</option>
+                    <option value="" className="text-gray-400">
+                      Select action...
+                    </option>
                     <option value="approve">Approve</option>
                     <option value="reject">Reject</option>
                   </select>
                   {errors.action && (
-                    <p className="text-red-500 text-sm mt-1">{errors.action.message}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.action.message}
+                    </p>
                   )}
                 </div>
 
                 {actionValue && (
                   <div>
                     <label className="block text-sm font-medium text-[#424242] mb-2">
-                      Comments {actionValue === 'reject' && <span className="text-red-500">*</span>}
+                      Comments{' '}
+                      {actionValue === 'reject' && (
+                        <span className="text-red-500">*</span>
+                      )}
                     </label>
                     <textarea
                       {...register('comments')}
                       rows={3}
-                      placeholder={actionValue === 'approve' ? 'Optional approval notes...' : 'Please provide reason for rejection...'}
-                      className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
+                      placeholder={
+                        actionValue === 'approve'
+                          ? 'Optional approval notes...'
+                          : 'Please provide reason for rejection...'
+                      }
+                      className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] text-black"
                     />
                     {errors.comments && (
-                      <p className="text-red-500 text-sm mt-1">{errors.comments.message}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.comments.message}
+                      </p>
                     )}
                   </div>
                 )}
 
+                {/* Action Button */}
                 <div className="flex space-x-4">
                   <button
                     type="submit"
                     disabled={!actionValue}
-                    className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${actionValue === 'approve'
-                        ? 'bg-[#bbf7d0] hover:bg-[#15803d] text-white'
+                    className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
+                      actionValue === 'approve'
+                        ? 'bg-[#16a34a] hover:bg-[#15803d] text-white'
                         : actionValue === 'reject'
-                          ? 'bg-red-600 hover:bg-red-700 text-white'
-                          : 'bg-[#d4d4d4] text-[#737373] cursor-not-allowed'
-                      }`}
+                        ? 'bg-red-600 hover:bg-red-700 text-white'
+                        : 'bg-[#d4d4d4] text-[#737373] cursor-not-allowed'
+                    }`}
                   >
-                    {actionValue === 'approve' && <Check className="h-4 w-4 mr-2" />}
-                    {actionValue === 'reject' && <X className="h-4 w-4 mr-2" />}
-                    {actionValue ? `${actionValue.charAt(0).toUpperCase() + actionValue.slice(1)} Facility` : 'Select Action'}
+                    {actionValue === 'approve' && (
+                      <Check className="h-4 w-4 mr-2" />
+                    )}
+                    {actionValue === 'reject' && (
+                      <X className="h-4 w-4 mr-2" />
+                    )}
+                    {actionValue
+                      ? `${actionValue.charAt(0).toUpperCase() + actionValue.slice(1)} Facility`
+                      : 'Select Action'}
                   </button>
                 </div>
               </form>

@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <div className="flex items-center justify-between h-16 px-4 border-b border-neutral-200">
                     <div className="flex items-center space-x-2">
                         <Activity className="h-8 w-8 text-[#212121]" />
-                        <span className="text-lg font-bold text-[#212121]">Urban Athlete</span>
+                        <span className="text-lg font-bold text-[#212121]">Quick court</span>
                     </div>
                     <button
                         onClick={onClose}
