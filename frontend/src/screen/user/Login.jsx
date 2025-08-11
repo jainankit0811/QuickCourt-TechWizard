@@ -21,7 +21,7 @@ function Login() {
             type="email"
             placeholder="Email"
             {...register('email', { required: 'Email is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -29,7 +29,7 @@ function Login() {
             type="password"
             placeholder="Password"
             {...register('password', { required: 'Password is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 

@@ -21,7 +21,7 @@ function Signup() {
             type="text"
             placeholder="Name"
             {...register('name', { required: 'Name is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
@@ -29,7 +29,7 @@ function Signup() {
             type="email"
             placeholder="Email"
             {...register('email', { required: 'Email is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -37,7 +37,7 @@ function Signup() {
             type="text"
             placeholder="Mobile"
             {...register('mobile', { required: 'Mobile number is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile.message}</p>}
 
@@ -45,13 +45,13 @@ function Signup() {
             type="password"
             placeholder="Password"
             {...register('password', { required: 'Password is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <select
             {...register('type', { required: 'User type is required' })}
-            className="w-full px-4 py-2 border rounded-md"
+            className="w-full px-4 py-2 border rounded-md text-black"
           >
             <option value="">Select Type</option>
             <option value="User">User</option>

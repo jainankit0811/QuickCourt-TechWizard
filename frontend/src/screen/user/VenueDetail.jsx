@@ -18,35 +18,35 @@ function VenueDetails() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">{venue.name}</h1>
+    <div className="container mx-auto p-4 text-black">
+      <h1 className="text-3xl font-bold mb-6 text-black">{venue.name}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <div className="carousel w-full rounded-box">
             <div className="carousel-item w-full">
               <div className="bg-gray-200 h-64 w-full flex items-center justify-center">
-                <span>Venue Image</span>
+                <span className="text-black">Venue Image</span>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <p>{venue.description}</p>
-          <p><strong>Address:</strong> {venue.address}</p>
-          <p><strong>Sports:</strong> {venue.sports.join(', ')}</p>
-          <p><strong>Amenities:</strong> {venue.amenities.join(', ')}</p>
-          <p><strong>About:</strong> {venue.about}</p>
-          <a href={`/book/${id}`} className="btn btn-secondary mt-4">Book Now</a>
+          <p className="text-black">{venue.description}</p>
+          <p className="text-black"><strong>Address:</strong> {venue.address}</p>
+          <p className="text-black"><strong>Sports:</strong> {venue.sports.join(', ')}</p>
+          <p className="text-black"><strong>Amenities:</strong> {venue.amenities.join(', ')}</p>
+          <p className="text-black"><strong>About:</strong> {venue.about}</p>
+          <a href={`/book/${id}`} className="btn btn-secondary mt-4 text-black">Book Now</a>
         </div>
       </div>
       <div className="mt-8">
-        <h2 className="text-2xl font-bold">Reviews</h2>
-        <p>Average Rating: {venue.rating}</p>
+        <h2 className="text-2xl font-bold text-black">Reviews</h2>
+        <p className="text-black">Average Rating: {venue.rating}</p>
         {venue.reviews.map((review, index) => (
           <div key={index} className="card bg-base-100 shadow-xl mt-4">
             <div className="card-body">
-              <p><strong>{review.user}</strong>: {review.comment}</p>
-              <p>Rating: {review.rating}</p>
+              <p className="text-black"><strong>{review.user}</strong>: {review.comment}</p>
+              <p className="text-black">Rating: {review.rating}</p>
             </div>
           </div>
         ))}
