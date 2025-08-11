@@ -12,13 +12,13 @@ const OwnerRoutes = () => {
             <Router>
                 <div className="App">
                     <Routes>
-                        <Route path="/" element={<DashboardLayout />}>
+                        <Route path="/owner" element={<DashboardLayout />}>
                             <Route index element={<Dashboard />} />
-                            <Route path="/facilities" element={<FacilityManagement />} />
-                            <Route path="/courts" element={<CourtManagement />} />
-                            <Route path="/time-slots" element={<TimeSlotManagement />} />
-                            <Route path="/bookings" element={<BookingOverview />} />
-                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/owner/facilities" element={<FacilityManagement />} />
+                            <Route path="/owner/courts" element={<CourtManagement />} />
+                            <Route path="/owner/time-slots" element={<TimeSlotManagement />} />
+                            <Route path="/owner/bookings" element={<BookingOverview />} />
+                            <Route path="/owner/profile" element={<Profile />} />
                         </Route>
                     </Routes>
                 </div>
