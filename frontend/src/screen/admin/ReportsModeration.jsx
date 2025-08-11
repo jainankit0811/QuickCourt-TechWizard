@@ -4,13 +4,11 @@ import { reportsData } from '../../data/mockData';
 
 const ReportsModeration = () => {
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filterPriority, setFilterPriority] = useState('all');
 
   // Filter reports based on selected filters
   const filteredReports = reportsData.filter((report) => {
     const matchesStatus = filterStatus === 'all' || report.status === filterStatus;
-    const matchesPriority = filterPriority === 'all' || report.priority === filterPriority;
-    return matchesStatus && matchesPriority;
+    return matchesStatus;
   });
 
   // Handle actions on reports
@@ -46,20 +44,6 @@ const ReportsModeration = () => {
     }
   };
 
-  // Priority colors
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high':
-        return 'bg-red-100 text-[#9a3412]';
-      case 'medium':
-        return 'bg-[#ffedd5] text-[#9a3412]';
-      case 'low':
-        return 'bg-[#dcfce7] text-[#166534]';
-      default:
-        return 'bg-[#fafafa] text-[#171717]';
-    }
-  };
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -74,7 +58,7 @@ const ReportsModeration = () => {
 
       {/* Filters */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {/* Status Filter */}
           <div>
             <label className="block text-sm font-medium text-[#424242] mb-2">Status</label>
@@ -89,21 +73,6 @@ const ReportsModeration = () => {
               <option value="resolved">Resolved</option>
             </select>
           </div>
-
-          {/* Priority Filter */}
-          <div>
-            <label className="block text-sm font-medium text-[#424242] mb-2">Priority</label>
-            <select
-              value={filterPriority}
-              onChange={(e) => setFilterPriority(e.target.value)}
-              className="w-full p-2 border border-[#e5e5e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9] text-black"
-            >
-              <option value="all">All Priorities</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -116,7 +85,7 @@ const ReportsModeration = () => {
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                {/* Status & Priority */}
+                {/* Status */}
                 <div className="flex items-center space-x-3 mb-3">
                   <div
                     className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
@@ -125,13 +94,6 @@ const ReportsModeration = () => {
                   >
                     {getStatusIcon(report.status)}
                     <span className="ml-1">{report.status}</span>
-                  </div>
-                  <div
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(
-                      report.priority
-                    )}`}
-                  >
-                    {report.priority} priority
                   </div>
                   <span className="text-xs text-[#757575]">
                     {report.type.replace('_', ' ')}
