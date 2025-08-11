@@ -14,11 +14,12 @@ export const createUsercontroller = async (req, res) => {
         const { email, password } = req.body;
         // Register the user
         const user = await userServices.registerUser(email, password);
-
         // Generate JWT token
         const token = user.generateJWT();
-
-        res.status(201).json({ user, token });
+        // Remove password from user object before sending response
+        const userObj = user.toObject();
+        delete userObj.password;
+        res.status(201).json({ user: userObj, token });
     } catch (error) {
         console.error('Error creating user:', error);
 
@@ -50,17 +51,17 @@ export const loginUserController = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         // Check password validity
         const isValidPassword = await user.isvalidPassword(password);
         if (!isValidPassword) {
             return res.status(401).json({ message: 'Invalid password' });
         }
-
         // Generate JWT token
         const token = user.generateJWT();
-
-        res.status(200).json({ user, token });
+        // Remove password from user object before sending response
+        const userObj = user.toObject();
+        delete userObj.password;
+        res.status(200).json({ user: userObj, token });
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'Internal server error' });

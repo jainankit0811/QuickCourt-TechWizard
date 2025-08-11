@@ -1,7 +1,15 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: [2, 'Full name must be at least 2 characters'],
+        maxlength: [50, 'Full name must be at most 50 characters']
+    },
     email: {
         type: String,
         required: true,
@@ -10,12 +18,35 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         minlength: [3, 'Email must be at least 3 characters long'],
         maxlength: [50, 'Email must be at most 50 characters long'],
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
     },
     password: {
         type: String,
         select: false,
         required: true,
+        minlength: [8, 'Password must be at least 8 characters'],
+        maxlength: [20, 'Password must be at most 20 characters'],
+        validate: {
+            validator: function (v) {
+                // At least one uppercase, one number, one special symbol (@ or #)
+                return /^(?=.*[A-Z])(?=.*\d)(?=.*[@#]).{8,20}$/.test(v);
+            },
+            message: 'Password must be 8-20 characters, include uppercase, number, and @ or #.'
+        }
     },
+    role: {
+        type: String,
+        enum: ['Player', 'Facility Owner'],
+        required: true
+    },
+    profilePicture: {
+        type: String, // store image URL or path
+        default: ''
+    },
+    passwordResetToken: {
+        type: String,
+        default: ''
+    }
 });
 
 userSchema.statics.hashPassword = async function (password) {
