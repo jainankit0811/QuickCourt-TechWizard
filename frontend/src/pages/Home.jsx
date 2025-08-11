@@ -2,11 +2,12 @@
 import React, { useRef } from 'react';
 import Navbar from '../components/Navbar';
 import searchloc from "../assets/searchloc.png"
+import { Link } from 'react-router-dom';
 
 function Home() {
   const venueRef = useRef(null);
   const sportRef = useRef(null);
-
+0
   const venues = [
     { name: 'SBR Badminton', rating: 4.5, location: 'City Center' },
     { name: 'Elite Tennis Hub', rating: 4.7, location: 'Downtown' },
@@ -17,7 +18,10 @@ function Home() {
     { name: 'Premier Volleyball Arena', rating: 4.4, location: 'South Park' },
     { name: 'Elite Golf Range', rating: 4.9, location: 'Countryside' },
   ];
-
+const sportImages = {
+  Football: 'https://cdn.britannica.com/63/211663-050-A674D74C/Jonny-Bairstow-batting-semifinal-match-England-Australia-2019.jpg',
+  Basketball: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT25vDT9TCBHDRKO6gsqfy4cHCK124wa3ulx3ykwsvcEfScwhn9mKXSaUEK5RytuCUs4WI&usqp=CAU',
+};
   const sports = [
     'Badminton',
     'Tennis',
@@ -44,7 +48,7 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen font-sans px-10">
+    <div className="min-h-screen bg-white font-sans px-10">
       {/* Header */}
 
         <Navbar/>
@@ -77,18 +81,21 @@ function Home() {
 </div>       
  <div className="md:w-1/2">
           <img
-            src="https://www.avantseating.com/wp-content/uploads/2020/08/sports-arena-7.jpg"
+            src="https://img.freepik.com/free-vector/sport-text-banner-poster-design_1308-132612.jpg?semt=ais_hybrid&w=740&q=80"
             alt="Sports Arena"
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full object-contain h-auto rounded-lg "
           />
         </div>
       </main>
 
       {/* Book Venues Section */}
+
+      <Link to="/VenueDetails">
+      
       <section className="py-12  px-10">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Book Venues</h2>
-          <button className="text-blue-600 hover:underline">See all Venues</button>
+          <button className="text-blue-600 hover:underline"><Link to="/VenuePage"><h2>See All venues</h2></Link></button>
         </div>
         <div className="relative">
           <div
@@ -98,7 +105,7 @@ function Home() {
           >
             {venues.map((venue, index) => (
               <div
-  key={index}
+              key={index}
   className="bg-white rounded-xl shadow-md overflow-hidden w-[280px] min-h-60 flex-shrink-0 transform transition duration-300 hover:scale-105 hover:shadow-xl"
 >
   {/* Image */}
@@ -145,58 +152,62 @@ function Home() {
           <div className="flex justify-between mt-6">
             <button
               onClick={() => scrollLeft(venueRef)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-blue-600 text-black px-4 py-2 rounded-md"
             >
               Left
             </button>
             <button
               onClick={() => scrollRight(venueRef)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
-            >
+              className="bg-blue-600 text-black px-4 py-2 rounded-md"
+              >
               Right
             </button>
           </div>
         </div>
       </section>
+              </Link>
 
       {/* Popular Sports Section */}
-      <section className="py-12 bg-white px-10">
-        <h2 className="text-3xl font-bold mb-8">Popular Sports</h2>
-        <div className="relative">
-          <div
-            ref={sportRef}
-            className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Hide scrollbar for Firefox and IE
-          >
-            {sports.map((sport, index) => (
-              <div key={index} className="relative rounded-lg overflow-hidden min-w-[250px] flex-shrink-0">
-                <img
-                  src="https://www.meetingstoday.com/sites/default/files/styles/mt_default/public/2022-12/Petco%20Park%202_RESIZEDHEROjpg.jpg?itok=yp6AajZG"
-                  alt={sport}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                  <h3 className="text-white text-2xl font-bold">{sport}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => scrollLeft(sportRef)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
-            >
-              Left
-            </button>
-            <button
-              onClick={() => scrollRight(sportRef)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
-            >
-              Right
-            </button>
+     <section className="py-12 bg-white px-10">
+  <h2 className="text-3xl font-bold mb-8">Popular Sports</h2>
+  <div className="relative">
+    <div
+      ref={sportRef}
+      className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide"
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
+      {sports.map((sport, index) => (
+        <div
+          key={index}
+          className="relative rounded-lg overflow-hidden min-w-[250px] flex-shrink-0"
+        >
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT25vDT9TCBHDRKO6gsqfy4cHCK124wa3ulx3ykwsvcEfScwhn9mKXSaUEK5RytuCUs4WI&usqp=CAU"
+            alt={sport}
+            className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+          />
+          <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
+            <h3 className="text-white text-2xl font-bold">{sport}</h3>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+    <div className="flex justify-between mt-6">
+      <button
+        onClick={() => scrollLeft(sportRef)}
+        className="bg-blue-600 text-white px-4 py-2 rounded-md"
+      >
+        Left
+      </button>
+      <button
+        onClick={() => scrollRight(sportRef)}
+        className="bg-blue-600 text-white px-4 py-2 rounded-md"
+      >
+        Right
+      </button>
+    </div>
+  </div>
+</section>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 px-10 text-center">

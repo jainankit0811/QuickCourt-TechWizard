@@ -1,20 +1,32 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
-import Home from "../pages/Home";
-import Navbar from "../components/Navbar";
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Home from '../pages/Home.jsx';
 
-const AppRouter = () => {
-    return (
-        <div className="bg-white min-h-screen">
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    {/* Add more routes as needed */}
-                </Routes>
-                <Routes path="/navbar" element={<Navbar></Navbar>}></Routes>
-            </BrowserRouter>
-        </div>
-    );
+import VenueDetails from '../pages/VenueDetail.jsx';
+import CourtBooking from '../pages/CourtBooking.jsx';
+import MyBookings from '../pages/MyBookings.jsx';
+import Profile from '../pages/Profile.jsx';
+import Signup from '../pages/Signup.jsx';
+import Login from '../pages/Login.jsx';
+import VenuePage from '../pages/VenuePage.jsx';
+
+function AppRouter() {
+  return (
+    <div className='min-w-screen bg-white'>
+
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/Signup" element={<Signup />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/VenueDetails" element={<VenueDetails />} />
+      <Route path="/VenuePage" element={<VenuePage/>} />
+      <Route path="/book/:id" element={<CourtBooking />} />
+      <Route path="/my-bookings" element={<MyBookings />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
+    </BrowserRouter>
+    </div>
+  );
 }
 
 export default AppRouter;
