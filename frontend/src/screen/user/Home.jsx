@@ -48,9 +48,12 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-white font-sans px-10">
+<<<<<<< HEAD
       {/* Header */}
 
 
+=======
+>>>>>>> 9dd908196740af8c36a5c4482e351a6ade444148
       {/* Main Section */}
       <main className="flex flex-col md:flex-row items-center justify-between px-10 py-12 bg-white gap-8">
         <div className="md:w-1/2 mb-8 md:mb-0">
