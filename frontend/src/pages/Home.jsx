@@ -1,7 +1,6 @@
 // src/App.js
 import React, { useRef } from 'react';
 import Navbar from '../components/UserNavbar';
-import searchloc from "../assets/searchloc.png"
 import { Link } from 'react-router-dom';
 
 function Home() {
@@ -63,11 +62,7 @@ const sportImages = {
       placeholder="Search location..."
       className="w-1/2 pl-12 pr-4 py-2 text-2xl border-b-2 text-left border-gray-500 focus:outline-none focus:border-blue-500"
     />
-    <img
-      src={searchloc}
-      alt="Search Icon"
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8"
-    />
+
   </div>
 
   {/* Headings */}
