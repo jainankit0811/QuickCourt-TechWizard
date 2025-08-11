@@ -1,7 +1,9 @@
-import AppRouter from "./router/AppRouter";
+import OwnerRoutes from "./router/OwnerRoutes";
 const App = () => {
   return (
-    <AppRouter />
+    <>
+      <OwnerRoutes />
+    </>
   );
 }
 
