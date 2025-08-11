@@ -81,6 +81,19 @@ const BookingOverview = () => {
     return `inline-flex px-2 py-1 text-xs font-semibold rounded-full ${colors[status]}`;
   };
 
+  // Handler for View button
+  const handleView = (booking) => {
+    // TODO: Implement modal or navigation to booking details
+    alert(`Viewing booking ${booking.bookingId}`);
+  };
+
+  // Handler for Confirm button
+  const handleConfirm = async (booking) => {
+    // TODO: Integrate with backend API to confirm booking
+    alert(`Confirm booking ${booking.bookingId}`);
+    // Example: await bookingService.confirmBooking(booking.id);
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -142,7 +155,7 @@ const BookingOverview = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search bookings..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black"
               />
             </div>
           </div>
@@ -154,7 +167,7 @@ const BookingOverview = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             >
               <option value="All">All Status</option>
               <option value="Confirmed">Confirmed</option>
@@ -165,9 +178,9 @@ const BookingOverview = () => {
           </div>
 
           <div className="md:col-span-2">
-            <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
-              More Filters
+            <Button variant="outline" className="text-white">
+              <Filter className="w-4 h-4 mr-2 text-white" />
+              <span className="text-white">More Filters</span>
             </Button>
           </div>
         </div>
@@ -236,11 +249,11 @@ const BookingOverview = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleView(booking)}>
                         View
                       </Button>
                       {booking.status === 'Pending' && (
-                        <Button size="sm">
+                        <Button size="sm" onClick={() => handleConfirm(booking)}>
                           Confirm
                         </Button>
                       )}

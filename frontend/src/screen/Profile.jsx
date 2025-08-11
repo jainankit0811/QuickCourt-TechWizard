@@ -1,26 +1,66 @@
 import { Building2, Edit2, Mail, MapPin, Phone, Save, User, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../components/Button';
+import { getProfile, upsertProfile } from '../services/profile.service';
 
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
+    const [profileData, setProfileData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        businessName: '',
+        businessType: '',
+        description: '',
+        joinDate: '',
+        totalFacilities: '',
+        totalCourts: '',
+        averageRating: ''
+    });
 
-    const profileData = {
-        name: 'John Doe',
-        email: 'john.doe@sportscourt.com',
-        phone: '+1 (555) 123-4567',
-        address: '123 Business Street, City, State 12345',
-        businessName: 'SportsCourt Facilities',
-        businessType: 'Sports Facility Management',
-        description: 'Professional sports facility management company providing world-class court rental services.',
-        joinDate: 'January 2023',
-        totalFacilities: '3',
-        totalCourts: '12',
-        averageRating: '4.8'
+    useEffect(() => {
+        getProfile().then((data) => {
+            setProfileData({
+                name: data.fullName || '',
+                email: data.email || '',
+                phone: data.phone || '',
+                address: data.address || '',
+                businessName: data.businessName || '',
+                businessType: data.businessType || '',
+                description: data.description || '',
+                joinDate: data.joinDate || '',
+                totalFacilities: data.totalFacilities || '',
+                totalCourts: data.totalCourts || '',
+                averageRating: data.averageRating || ''
+            });
+        });
+    }, []);
+
+    const handleChange = (e) => {
+        setProfileData({ ...profileData, [e.target.name]: e.target.value });
+    };
+
+    const handleSave = async (e) => {
+        e.preventDefault();
+        await upsertProfile({
+            fullName: profileData.name,
+            email: profileData.email,
+            phone: profileData.phone,
+            address: profileData.address,
+            businessName: profileData.businessName,
+            businessType: profileData.businessType,
+            description: profileData.description,
+            joinDate: profileData.joinDate,
+            totalFacilities: profileData.totalFacilities,
+            totalCourts: profileData.totalCourts,
+            averageRating: profileData.averageRating
+        });
+        setIsEditing(false);
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 text-black">
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
@@ -67,7 +107,7 @@ const Profile = () => {
 
                 {/* Profile Form */}
                 <div className="xl:col-span-2 bg-white rounded-lg border border-gray-200 p-6">
-                    <form className="space-y-6">
+                    <form className="space-y-6" onSubmit={handleSave}>
                         {/* Personal Information */}
                         <div>
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
@@ -79,7 +119,9 @@ const Profile = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        defaultValue={profileData.name}
+                                        name="name"
+                                        value={profileData.name}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -93,7 +135,9 @@ const Profile = () => {
                                     </label>
                                     <input
                                         type="email"
-                                        defaultValue={profileData.email}
+                                        name="email"
+                                        value={profileData.email}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -107,7 +151,9 @@ const Profile = () => {
                                     </label>
                                     <input
                                         type="tel"
-                                        defaultValue={profileData.phone}
+                                        name="phone"
+                                        value={profileData.phone}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -121,7 +167,9 @@ const Profile = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        defaultValue={profileData.address}
+                                        name="address"
+                                        value={profileData.address}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -141,7 +189,9 @@ const Profile = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        defaultValue={profileData.businessName}
+                                        name="businessName"
+                                        value={profileData.businessName}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -153,7 +203,9 @@ const Profile = () => {
                                         Business Type
                                     </label>
                                     <select
-                                        defaultValue={profileData.businessType}
+                                        name="businessType"
+                                        value={profileData.businessType}
+                                        onChange={handleChange}
                                         disabled={!isEditing}
                                         className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                             }`}
@@ -172,7 +224,9 @@ const Profile = () => {
                                 </label>
                                 <textarea
                                     rows={4}
-                                    defaultValue={profileData.description}
+                                    name="description"
+                                    value={profileData.description}
+                                    onChange={handleChange}
                                     disabled={!isEditing}
                                     className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${!isEditing ? 'bg-gray-50 text-gray-600' : ''
                                         }`}
@@ -184,11 +238,11 @@ const Profile = () => {
                         {/* Action Buttons */}
                         {isEditing && (
                             <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-200">
-                                <Button variant="outline" onClick={() => setIsEditing(false)}>
+                                <Button variant="outline" onClick={() => setIsEditing(false)} className="text-white">
                                     <X className="w-4 h-4 mr-2" />
                                     Cancel
                                 </Button>
-                                <Button onClick={() => setIsEditing(false)}>
+                                <Button type="submit">
                                     <Save className="w-4 h-4 mr-2" />
                                     Save Changes
                                 </Button>
