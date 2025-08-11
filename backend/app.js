@@ -1,34 +1,34 @@
-
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import session from 'express-session';
-import connectRedis from 'connect-redis';
+import cookieParser from 'cookie-parser';
+import RedisStore from 'connect-redis';
 import connectDB from './db/db.js';
 import redisClient from './services/redis.service.js';
 import authRoutes from './routes/authRoutes.js';
-// import bookingRoutes from './routes/bookingRoutes.js';
-// import facilityRoutes from './routes/facilityRoutes.js';
-// import courtRoutes from './routes/courtRoutes.js';
-// import userRoutes from './routes/userRoutes.js';
+import facilityRoutes from './routes/facilityRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+import courtRoutes from './routes/courtRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js'; // New dashboard route
 
 dotenv.config();
 connectDB();
-import facilityRoutes from './routes/facility.routes.js';
-import profileRoutes from './routes/profile.routes.js';
-import userRoutes from './routes/user.routes.js'; // Connect to MongoDB
 
 const app = express();
-const RedisStore = connectRedis(session);
 
 app.use(helmet());
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(
   session({
@@ -36,32 +36,19 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 30 * 24 * 60 * 60 * 1000 },
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    },
   })
 );
-=======
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use('/facilities', facilityRoutes);
-app.use('/profile', profileRoutes);
-// Enable CORS for frontend
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
-
-// Mount user routes at /api/auth
-app.use('/api/auth', userRoutes);
-
->>>>>>> 319c362cc9d8a0cee43285e7fc80ba58d66daecb
 
 app.use('/api/auth', authRoutes);
-// app.use('/api/bookings', bookingRoutes);
-// app.use('/api/facilities', facilityRoutes);
-// app.use('/api/courts', courtRoutes);
-// app.use('/api/users', userRoutes);
+app.use('/facilities', facilityRoutes);
+app.use('/profile', userRoutes);
+app.use('/bookings', bookingRoutes);
+app.use('/courts', courtRoutes);
+app.use('/dashboard', dashboardRoutes); // New
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -69,4 +56,3 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
-
