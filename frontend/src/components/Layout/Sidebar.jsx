@@ -32,7 +32,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
             {/* Sidebar */}
             <div className={`
-        fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+        fixed inset-y-0 left-0 z-30 w-64 bg-grey shadow-lg transform transition-transform duration-300 ease-in-out
         lg:translate-x-0 lg:static lg:inset-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                     className={`
                     flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200
                     ${isActive
-                                            ? 'bg-[#e0f2fe] text-[#0369a1] border-r-2 border-[#0ea5e9]'
+                                            ? 'bg-[#000000] text-[#0369a1] border-r-2 border-[#0ea5e9]'
                                             : 'text-[#616161] hover:bg-[#f5f5f5] hover:text-[#212121]'
                                         }
                   `}
