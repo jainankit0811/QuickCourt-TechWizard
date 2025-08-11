@@ -1,3 +1,6 @@
+
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
@@ -15,6 +18,9 @@ import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 connectDB();
+import facilityRoutes from './routes/facility.routes.js';
+import profileRoutes from './routes/profile.routes.js';
+import userRoutes from './routes/user.routes.js'; // Connect to MongoDB
 
 const app = express();
 const RedisStore = connectRedis(session);
@@ -33,6 +39,23 @@ app.use(
     cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 30 * 24 * 60 * 60 * 1000 },
   })
 );
+=======
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use('/facilities', facilityRoutes);
+app.use('/profile', profileRoutes);
+// Enable CORS for frontend
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
+// Mount user routes at /api/auth
+app.use('/api/auth', userRoutes);
+
+>>>>>>> 319c362cc9d8a0cee43285e7fc80ba58d66daecb
 
 app.use('/api/auth', authRoutes);
 // app.use('/api/bookings', bookingRoutes);
@@ -46,3 +69,4 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
+
