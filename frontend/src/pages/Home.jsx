@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useRef } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/UserNavbar';
 import searchloc from "../assets/searchloc.png"
 import { Link } from 'react-router-dom';
 
