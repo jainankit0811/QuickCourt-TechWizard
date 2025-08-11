@@ -9,13 +9,13 @@ import Signup from '../pages/Signup.jsx';
 import Login from '../pages/Login.jsx';
 import VenuePage from '../pages/VenuePage.jsx';
 
-function AppRouter() {
+function UserRouter() {
   return (
     <div className='min-w-screen bg-white'>
 
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/user" element={<Home />} />
       <Route path="/Signup" element={<Signup />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/VenueDetails" element={<VenueDetails />} />
@@ -29,4 +29,4 @@ function AppRouter() {
   );
 }
 
-export default AppRouter;
+export default UserRouter;
