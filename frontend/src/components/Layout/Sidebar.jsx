@@ -38,12 +38,12 @@ const Sidebar = ({ isOpen, onClose }) => {
       `}>
                 <div className="flex items-center justify-between h-16 px-4 border-b border-neutral-200">
                     <div className="flex items-center space-x-2">
-                        <Activity className="h-8 w-8 text-urbanGray-800" />
-                        <span className="text-lg font-bold text-urbanGray-800">Urban Athlete</span>
+                        <Activity className="h-8 w-8 text-[#212121]" />
+                        <span className="text-lg font-bold text-[#212121]">Urban Athlete</span>
                     </div>
                     <button
                         onClick={onClose}
-                        className="lg:hidden text-urbanGray-600 hover:text-urbanGray-800"
+                        className="lg:hidden text-[#616161] hover:text-[#212121]"
                     >
                         <X className="h-6 w-6" />
                     </button>
@@ -64,8 +64,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                                     className={`
                     flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200
                     ${isActive
-                                            ? 'bg-primary-100 text-primary-700 border-r-2 border-primary-500'
-                                            : 'text-urbanGray-600 hover:bg-neutral-100 hover:text-urbanGray-800'
+                                            ? 'bg-[#e0f2fe] text-[#0369a1] border-r-2 border-[#0ea5e9]'
+                                            : 'text-[#616161] hover:bg-[#f5f5f5] hover:text-[#212121]'
                                         }
                   `}
                                 >

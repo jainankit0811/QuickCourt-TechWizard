@@ -33,33 +33,33 @@ const ReportsModeration = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
-        return 'bg-accent-100 text-accent-800';
+        return 'bg-[#fff7ed] text-[#9a3412]0';
       case 'investigating':
-        return 'bg-primary-100 text-primary-800';
+        return 'bg-[#e0f2fe] text-[#075985]';
       case 'resolved':
-        return 'bg-secondary-100 text-secondary-800';
+        return 'bg-[#dcfce7] text-[#166534]';
       default:
-        return 'bg-neutral-100 text-neutral-800';
+        return 'bg-[#fafafa] text-[#262626]';
     }
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
       case 'high':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-[#9a3412]';
       case 'medium':
-        return 'bg-accent-100 text-accent-800';
+        return 'bg-[#ffedd5] text-[#9a3412]';
       case 'low':
-        return 'bg-secondary-100 text-secondary-800';
+        return 'bg-[#dcfce7] text-[#166534]';
       default:
-        return 'bg-neutral-100 text-neutral-800';
+        return 'bg-[#fafafa] text-[#171717]';
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-urbanGray-800">Reports & Moderation</h1>
+        <h1 className="text-2xl font-bold text-[#212121]">Reports & Moderation</h1>
         <div className="flex items-center space-x-4">
           <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
             {filteredReports.filter(r => r.status === 'pending').length} Pending
@@ -68,14 +68,14 @@ const ReportsModeration = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200">
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-urbanGray-700 mb-2">Status</label>
+            <label className="block text-sm font-medium text-[#424242] mb-2">Status</label>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full p-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full p-2 border border-[#f5f5f5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -85,11 +85,11 @@ const ReportsModeration = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-urbanGray-700 mb-2">Priority</label>
+            <label className="block text-sm font-medium text-[#424242] mb-2">Priority</label>
             <select
               value={filterPriority}
               onChange={(e) => setFilterPriority(e.target.value)}
-              className="w-full p-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full p-2 border border-[#e5e5e5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
             >
               <option value="all">All Priorities</option>
               <option value="high">High</option>
@@ -103,7 +103,7 @@ const ReportsModeration = () => {
       {/* Reports List */}
       <div className="space-y-4">
         {filteredReports.map((report) => (
-          <div key={report.id} className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200">
+          <div key={report.id} className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5]">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-3">
@@ -114,39 +114,39 @@ const ReportsModeration = () => {
                   <div className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(report.priority)}`}>
                     {report.priority} priority
                   </div>
-                  <span className="text-xs text-urbanGray-500">
+                  <span className="text-xs text-[#757575]">
                     {report.type.replace('_', ' ')}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div>
-                    <p className="text-sm font-medium text-urbanGray-800">Reporter</p>
-                    <p className="text-urbanGray-600">{report.reporter}</p>
+                    <p className="text-sm font-medium text-[#212121]">Reporter</p>
+                    <p className="text-[#616161]">{report.reporter}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-urbanGray-800">Reported</p>
-                    <p className="text-urbanGray-600">{report.reported}</p>
+                    <p className="text-sm font-medium text-[#212121]">Reported</p>
+                    <p className="text-[#616161]">{report.reported}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-urbanGray-800">Date</p>
-                    <p className="text-urbanGray-600">{new Date(report.date).toLocaleDateString()}</p>
+                    <p className="text-sm font-medium text-[#212121]">Date</p>
+                    <p className="text-[#616161]">{new Date(report.date).toLocaleDateString()}</p>
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-medium text-urbanGray-800 mb-1">Description</p>
-                  <p className="text-urbanGray-600">{report.description}</p>
+                  <p className="text-sm font-medium text-[#212121] mb-1">Description</p>
+                  <p className="text-[#616161]">{report.description}</p>
                 </div>
               </div>
             </div>
 
             {report.status !== 'resolved' && (
-              <div className="flex space-x-3 pt-4 border-t border-neutral-200">
+              <div className="flex space-x-3 pt-4 border-t border-[#e5e5e5]">
                 {report.status === 'pending' && (
                   <button
                     onClick={() => handleReportAction(report.id, 'investigate')}
-                    className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 text-sm font-medium"
+                    className="bg-[#0284c7] text-white px-4 py-2 rounded-lg hover:bg-[#0369a1] transition-colors duration-200 text-sm font-medium"
                   >
                     Start Investigation
                   </button>
@@ -155,7 +155,7 @@ const ReportsModeration = () => {
                 {report.status === 'investigating' && (
                   <button
                     onClick={() => handleReportAction(report.id, 'resolve')}
-                    className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 text-sm font-medium"
+                    className="bg-[#16a34a] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors duration-200 text-sm font-medium"
                   >
                     Mark Resolved
                   </button>
@@ -163,7 +163,7 @@ const ReportsModeration = () => {
 
                 <button
                   onClick={() => handleReportAction(report.id, 'escalate')}
-                  className="bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 transition-colors duration-200 text-sm font-medium"
+                  className="bg-[#ea580c] text-white px-4 py-2 rounded-lg hover:bg-[#c2410c] transition-colors duration-200 text-sm font-medium"
                 >
                   Escalate
                 </button>
@@ -174,9 +174,9 @@ const ReportsModeration = () => {
 
         {filteredReports.length === 0 && (
           <div className="text-center py-12">
-            <Flag className="h-12 w-12 text-urbanGray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-urbanGray-800 mb-2">No reports found</h3>
-            <p className="text-urbanGray-500">Try adjusting your filters to see more reports.</p>
+            <Flag className="h-12 w-12 text-[#9e9e9e] mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-[#212121] mb-2">No reports found</h3>
+            <p className="text-[#757575]">Try adjusting your filters to see more reports.</p>
           </div>
         )}
       </div>

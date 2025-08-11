@@ -42,16 +42,16 @@ const FacilityApproval = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-urbanGray-800">Facility Approval</h1>
-        <div className="bg-accent-100 text-accent-800 px-3 py-1 rounded-full text-sm font-medium">
+        <h1 className="text-2xl font-bold text-[#212121]">Facility Approval</h1>
+        <div className="bg-[#ffedd5] text-[#9a3412] px-3 py-1 rounded-full text-sm font-medium">
           {pendingFacilities.length} Pending
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pendingFacilities.map((facility) => (
-          <div key={facility.id} className="bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-            <div className="aspect-video bg-neutral-200 overflow-hidden">
+          <div key={facility.id} className="bg-white rounded-lg shadow-sm border border-[#bae6fd] overflow-hidden hover:shadow-md transition-shadow duration-200">
+            <div className="aspect-video bg-[#bae6fd] overflow-hidden">
               <img
                 src={facility.images[0]}
                 alt={facility.name}
@@ -60,19 +60,19 @@ const FacilityApproval = () => {
             </div>
 
             <div className="p-6">
-              <h3 className="text-lg font-semibold text-urbanGray-800 mb-2">{facility.name}</h3>
-              <p className="text-sm text-urbanGray-600 mb-4">Owner: {facility.owner}</p>
+              <h3 className="text-lg font-semibold text-[#212121] mb-2">{facility.name}</h3>
+              <p className="text-sm text-[#616161] mb-4">Owner: {facility.owner}</p>
 
               <div className="space-y-2 mb-4">
-                <div className="flex items-center text-sm text-urbanGray-600">
+                <div className="flex items-center text-sm text-[#616161]">
                   <MapPin className="h-4 w-4 mr-2" />
                   {facility.location}
                 </div>
-                <div className="flex items-center text-sm text-urbanGray-600">
+                <div className="flex items-center text-sm text-[#616161]">
                   <Users className="h-4 w-4 mr-2" />
                   {facility.courts} Courts
                 </div>
-                <div className="flex items-center text-sm text-urbanGray-600">
+                <div className="flex items-center text-sm text-[#616161]">
                   <Calendar className="h-4 w-4 mr-2" />
                   {facility.submittedDate}
                 </div>
@@ -82,7 +82,7 @@ const FacilityApproval = () => {
                 {facility.sports.map((sport) => (
                   <span
                     key={sport}
-                    className="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full"
+                    className="bg-[#e0f2fe] text-[#075985] text-xs px-2 py-1 rounded-full"
                   >
                     {sport}
                   </span>
@@ -91,7 +91,7 @@ const FacilityApproval = () => {
 
               <button
                 onClick={() => handleFacilityClick(facility)}
-                className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 flex items-center justify-center"
+                className="w-full bg-[#0284c7] text-white py-2 px-4 rounded-lg hover:bg-[#0369a1] transition-colors duration-200 flex items-center justify-center"
               >
                 <Eye className="h-4 w-4 mr-2" />
                 Review Details
@@ -112,7 +112,7 @@ const FacilityApproval = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Image Gallery */}
             <div className="space-y-4">
-              <div className="aspect-video bg-neutral-200 rounded-lg overflow-hidden">
+              <div className="aspect-video bg-[#bae6fd] rounded-lg overflow-hidden">
                 <img
                   src={selectedFacility.images[selectedImageIndex]}
                   alt={`${selectedFacility.name} - Image ${selectedImageIndex + 1}`}
@@ -126,7 +126,7 @@ const FacilityApproval = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`aspect-square bg-neutral-200 rounded-lg overflow-hidden border-2 ${selectedImageIndex === index ? 'border-primary-500' : 'border-transparent'
+                      className={`aspect-square bg-[#bae6fd] rounded-lg overflow-hidden border-2 ${selectedImageIndex === index ? 'border-[#0ea5e9]' : 'border-transparent'
                         }`}
                     >
                       <img
@@ -143,38 +143,38 @@ const FacilityApproval = () => {
             {/* Details and Action Form */}
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-urbanGray-800 mb-2">
+                <h3 className="text-xl font-semibold text-[#212121] mb-2">
                   {selectedFacility.name}
                 </h3>
-                <p className="text-urbanGray-600">{selectedFacility.description}</p>
+                <p className="text-[#616161]">{selectedFacility.description}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-urbanGray-800">Owner</p>
-                  <p className="text-urbanGray-600">{selectedFacility.owner}</p>
+                  <p className="text-sm font-medium text-[#212121]">Owner</p>
+                  <p className="text-[#616161]">{selectedFacility.owner}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-urbanGray-800">Location</p>
-                  <p className="text-urbanGray-600">{selectedFacility.location}</p>
+                  <p className="text-sm font-medium text-[#212121]">Location</p>
+                  <p className="text-[#616161]">{selectedFacility.location}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-urbanGray-800">Courts</p>
-                  <p className="text-urbanGray-600">{selectedFacility.courts}</p>
+                  <p className="text-sm font-medium text-[#212121]">Courts</p>
+                  <p className="text-[#616161]">{selectedFacility.courts}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-urbanGray-800">Operating Hours</p>
-                  <p className="text-urbanGray-600">{selectedFacility.operatingHours}</p>
+                  <p className="text-sm font-medium text-[#212121]">Operating Hours</p>
+                  <p className="text-[#616161]">{selectedFacility.operatingHours}</p>
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-medium text-urbanGray-800 mb-2">Sports</p>
+                <p className="text-sm font-medium text-[#212121] mb-2">Sports</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedFacility.sports.map((sport) => (
                     <span
                       key={sport}
-                      className="bg-primary-100 text-primary-800 text-sm px-3 py-1 rounded-full"
+                      className="bg-[#e0f2fe] text-[#075985] text-sm px-3 py-1 rounded-full"
                     >
                       {sport}
                     </span>
@@ -183,12 +183,12 @@ const FacilityApproval = () => {
               </div>
 
               <div>
-                <p className="text-sm font-medium text-urbanGray-800 mb-2">Amenities</p>
+                <p className="text-sm font-medium text-[#212121] mb-2">Amenities</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedFacility.amenities.map((amenity) => (
                     <span
                       key={amenity}
-                      className="bg-secondary-100 text-secondary-800 text-sm px-3 py-1 rounded-full"
+                      className="bg-[#dcfce7] text-[#166534] text-sm px-3 py-1 rounded-full"
                     >
                       {amenity}
                     </span>
@@ -197,14 +197,14 @@ const FacilityApproval = () => {
               </div>
 
               {/* Action Form */}
-              <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 pt-4 border-t border-neutral-200">
+              <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 pt-4 border-t border-[#bae6fd]">
                 <div>
-                  <label className="block text-sm font-medium text-urbanGray-700 mb-2">
+                  <label className="block text-sm font-medium text-[#424242] mb-2">
                     Action
                   </label>
                   <select
                     {...register('action')}
-                    className="w-full p-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
                   >
                     <option value="">Select action...</option>
                     <option value="approve">Approve</option>
@@ -217,14 +217,14 @@ const FacilityApproval = () => {
 
                 {actionValue && (
                   <div>
-                    <label className="block text-sm font-medium text-urbanGray-700 mb-2">
+                    <label className="block text-sm font-medium text-[#424242] mb-2">
                       Comments {actionValue === 'reject' && <span className="text-red-500">*</span>}
                     </label>
                     <textarea
                       {...register('comments')}
                       rows={3}
                       placeholder={actionValue === 'approve' ? 'Optional approval notes...' : 'Please provide reason for rejection...'}
-                      className="w-full p-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full p-3 border border-[#bae6fd] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5e9] focus:border-[#0ea5e9]"
                     />
                     {errors.comments && (
                       <p className="text-red-500 text-sm mt-1">{errors.comments.message}</p>
@@ -237,10 +237,10 @@ const FacilityApproval = () => {
                     type="submit"
                     disabled={!actionValue}
                     className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${actionValue === 'approve'
-                        ? 'bg-secondary-600 hover:bg-secondary-700 text-white'
+                        ? 'bg-[#bbf7d0] hover:bg-[#15803d] text-white'
                         : actionValue === 'reject'
                           ? 'bg-red-600 hover:bg-red-700 text-white'
-                          : 'bg-neutral-300 text-neutral-500 cursor-not-allowed'
+                          : 'bg-[#d4d4d4] text-[#737373] cursor-not-allowed'
                       }`}
                   >
                     {actionValue === 'approve' && <Check className="h-4 w-4 mr-2" />}
