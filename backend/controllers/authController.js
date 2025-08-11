@@ -1,26 +1,47 @@
-import {
-  signup as signupService,
-  login as loginService,
-  logout as logoutService,
-} from '../services/authService.js';
+import { signup as signupService, login as loginService, logout as logoutService } from '../services/authService.js';
+import { body, validationResult } from 'express-validator';
+import upload from '../middlewares/multerMiddleware.js';
 
-const signup = async (req, res) => {
-  try {
-    const data = await signupService(req.body);
-    res.status(201).json(data);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+const signup = [
+  upload.single('avatar'), // Handle single file upload for avatar
+  body('email').isEmail().withMessage('Invalid email'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('fullName').notEmpty().withMessage('Full name is required'),
+  body('role').isIn(['user', 'facility_owner', 'admin']).withMessage('Invalid role'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-const login = async (req, res) => {
-  try {
-    const data = await loginService(req.body.email, req.body.password);
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+    try {
+      const data = await signupService({
+        email: req.body.email,
+        password: req.body.password,
+        fullName: req.body.fullName,
+        avatar: req.file?.path, // Path to uploaded file
+        role: req.body.role,
+      });
+      res.status(201).json(data);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
+];
+
+const login = [
+  body('email').isEmail().withMessage('Invalid email'),
+  body('password').notEmpty().withMessage('Password is required'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+    try {
+      const data = await loginService(req.body.email, req.body.password);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
+];
 
 const logout = async (req, res) => {
   try {
