@@ -1,19 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Dashboard from "../screen/Dashboard";
-import Login from "../screen/login";
-import Register from "../screen/register";
+import Dashboard from "../pages/Dashboard";
+import Home from "../pages/Home";
+import Navbar from "../components/Navbar";
 
 const AppRouter = () => {
     return (
-        <div className="bg-gray-900 min-h-screen">
+        <div className="bg-white min-h-screen">
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<Dashboard />} />
-                    <Route path='/dashboard' element={<Dashboard />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
+                    <Route path='/' element={<Home />} />
                     {/* Add more routes as needed */}
                 </Routes>
+                <Routes path="/navbar" element={<Navbar></Navbar>}></Routes>
             </BrowserRouter>
         </div>
     );
