@@ -1,7 +1,7 @@
 import axios from '../config/axios';
 
-export const getFacilities = async () => {
-    const res = await axios.get('/facilities');
+export const getFacilities = async (params) => {
+    const res = await axios.get('/facilities', { params });
     return res.data;
 };
 

@@ -1,4 +1,3 @@
-import AdminRoutes from "./router/AdminRoutes";
 import OwnerRoutes from "./router/OwnerRoutes";
 import UserRouter from "./router/UserRouter";
 
@@ -7,7 +6,6 @@ const App = () => {
     <>
       <OwnerRoutes />
       <UserRouter />
-      <AdminRoutes />
     </>
 
   );

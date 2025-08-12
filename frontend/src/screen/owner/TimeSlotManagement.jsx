@@ -1,10 +1,13 @@
+import axios from 'axios';
 import { AlertTriangle, Clock, Settings } from 'lucide-react';
-import { useState } from 'react';
-import Button from '../../components/Button';
+import { useEffect, useState } from 'react';
 
 const TimeSlotManagement = () => {
   const [selectedCourt, setSelectedCourt] = useState('Tennis Court A');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const courts = [
     'Tennis Court A',
@@ -13,26 +16,29 @@ const TimeSlotManagement = () => {
     'Badminton Court'
   ];
 
-  // Sample time slots data
-  const timeSlots = [
-    { time: '6:00 AM', status: 'available' },
-    { time: '7:00 AM', status: 'booked' },
-    { time: '8:00 AM', status: 'available' },
-    { time: '9:00 AM', status: 'maintenance' },
-    { time: '10:00 AM', status: 'available' },
-    { time: '11:00 AM', status: 'booked' },
-    { time: '12:00 PM', status: 'available' },
-    { time: '1:00 PM', status: 'available' },
-    { time: '2:00 PM', status: 'booked' },
-    { time: '3:00 PM', status: 'available' },
-    { time: '4:00 PM', status: 'available' },
-    { time: '5:00 PM', status: 'booked' },
-    { time: '6:00 PM', status: 'available' },
-    { time: '7:00 PM', status: 'available' },
-    { time: '8:00 PM', status: 'booked' },
-    { time: '9:00 PM', status: 'available' },
-    { time: '10:00 PM', status: 'available' }
-  ];
+  // Fetch slots function for reuse
+  const fetchTimeSlots = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get(`/timeslots`, {
+        params: {
+          courtName: selectedCourt,
+          date: selectedDate
+        }
+      });
+      setTimeSlots(res.data.filter(slot => slot.status === 'available'));
+    } catch (err) {
+      setError('Failed to fetch time slots');
+      setTimeSlots([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTimeSlots();
+  }, [selectedCourt, selectedDate]);
 
   const getSlotColor = (status) => {
     switch (status) {
@@ -58,6 +64,16 @@ const TimeSlotManagement = () => {
     }
   };
 
+  // Booking handler
+  const handleBookSlot = async (slotId) => {
+    try {
+      await axios.post('/bookings', { slotId });
+      await fetchTimeSlots(); // Refresh slots after booking
+    } catch (err) {
+      alert('Booking failed!');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -75,7 +91,7 @@ const TimeSlotManagement = () => {
             <select
               value={selectedCourt}
               onChange={(e) => setSelectedCourt(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+              className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             >
               {courts.map((court) => (
                 <option key={court} value={court}>{court}</option>
@@ -91,7 +107,7 @@ const TimeSlotManagement = () => {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+              className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -122,30 +138,28 @@ const TimeSlotManagement = () => {
           <h3 className="text-lg font-semibold text-gray-900">
             {selectedCourt} - {new Date(selectedDate).toLocaleDateString()}
           </h3>
-          <div className="flex space-x-2">
-            <Button variant="outline" size="sm">
-              Block All Remaining
-            </Button>
-            <Button variant="outline" size="sm">
-              Make All Available
-            </Button>
-          </div>
+
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-          {timeSlots.map((slot, index) => (
-            <button
-              key={index}
-              className={`p-3 border rounded-lg text-center transition-colors duration-200 hover:shadow-md ${getSlotColor(slot.status)}`}
-              disabled={slot.status === 'booked'}
-            >
-              <div className="flex flex-col items-center space-y-1">
-                {getSlotIcon(slot.status)}
-                <span className="text-xs font-medium">{slot.time}</span>
-                <span className="text-xs capitalize">{slot.status}</span>
+          {timeSlots.length === 0 ? (
+            <div className="col-span-full text-center text-gray-500">No available slots</div>
+          ) : (
+            timeSlots.map((slot, index) => (
+              <div key={index} className={`p-3 border rounded-lg text-center transition-colors duration-200 hover:shadow-md ${getSlotColor(slot.status)}`}>
+                <div className="flex flex-col items-center space-y-1">
+                  {getSlotIcon(slot.status)}
+                  <span className="text-xs font-medium">{slot.time}</span>
+                  <span className="text-xs capitalize">{slot.status}</span>
+                </div>
+                {slot.status === 'available' && (
+                  <Button variant="primary" size="sm" className="mt-2" onClick={() => handleBookSlot(slot._id)}>
+                    Book
+                  </Button>
+                )}
               </div>
-            </button>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

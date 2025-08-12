@@ -1,65 +1,36 @@
-import { Calendar, Clock, Filter, MapPin, Search, User } from 'lucide-react';
-import { useState } from 'react';
+import { Calendar, Clock, MapPin, Search, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
+import axios from '../../config/axios';
 
 const BookingOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const bookings = [
-    {
-      id: 1,
-      bookingId: 'BK001',
-      userName: 'John Smith',
-      userEmail: 'john.smith@email.com',
-      courtName: 'Tennis Court A',
-      facility: 'Downtown Sports Center',
-      date: '2024-01-15',
-      time: '2:00 PM - 3:00 PM',
-      status: 'Confirmed',
-      price: 50,
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 2,
-      bookingId: 'BK002',
-      userName: 'Sarah Johnson',
-      userEmail: 'sarah.j@email.com',
-      courtName: 'Basketball Court',
-      facility: 'Downtown Sports Center',
-      date: '2024-01-15',
-      time: '4:00 PM - 5:00 PM',
-      status: 'Confirmed',
-      price: 40,
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 3,
-      bookingId: 'BK003',
-      userName: 'Mike Wilson',
-      userEmail: 'mike.w@email.com',
-      courtName: 'Tennis Court B',
-      facility: 'Westside Tennis Club',
-      date: '2024-01-14',
-      time: '6:00 PM - 7:00 PM',
-      status: 'Completed',
-      price: 60,
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 4,
-      bookingId: 'BK004',
-      userName: 'Emily Davis',
-      userEmail: 'emily.d@email.com',
-      courtName: 'Badminton Court',
-      facility: 'Downtown Sports Center',
-      date: '2024-01-16',
-      time: '10:00 AM - 11:00 AM',
-      status: 'Pending',
-      price: 35,
-      paymentStatus: 'Pending'
-    }
-  ];
+  useEffect(() => {
+    const fetchBookings = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get('/bookings/booking-routes', {
+          params: {
+            search: searchTerm,
+            status: statusFilter !== 'All' ? statusFilter : undefined
+          }
+        });
+        setBookings(res.data);
+      } catch (err) {
+        setError('Failed to fetch bookings');
+        setBookings([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBookings();
+  }, [searchTerm, statusFilter]);
 
   const getStatusBadge = (status) => {
     const colors = {
@@ -176,13 +147,6 @@ const BookingOverview = () => {
               <option value="Cancelled">Cancelled</option>
             </select>
           </div>
-
-          <div className="md:col-span-2">
-            <Button variant="outline" className="text-white">
-              <Filter className="w-4 h-4 mr-2 text-white" />
-              <span className="text-white">More Filters</span>
-            </Button>
-          </div>
         </div>
       </div>
 
@@ -213,54 +177,62 @@ const BookingOverview = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {bookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">#{booking.bookingId}</p>
-                      <p className="text-sm text-gray-500">{new Date(booking.date).toLocaleDateString()}</p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{booking.userName}</p>
-                      <p className="text-sm text-gray-500">{booking.userEmail}</p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{booking.courtName}</p>
-                      <p className="text-sm text-gray-500">{booking.facility}</p>
-                      <p className="text-sm text-gray-500">{booking.time}</p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={getStatusBadge(booking.status)}>
-                      {booking.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">${booking.price}</p>
-                      <span className={getPaymentBadge(booking.paymentStatus)}>
-                        {booking.paymentStatus}
+              {loading ? (
+                <tr><td colSpan="6" className="text-center py-6 text-gray-500">Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan="6" className="text-center py-6 text-red-500">{error}</td></tr>
+              ) : bookings.length === 0 ? (
+                <tr><td colSpan="6" className="text-center py-6 text-gray-500">No bookings found</td></tr>
+              ) : (
+                bookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">#{booking.bookingId}</p>
+                        <p className="text-sm text-gray-500">{new Date(booking.date).toLocaleDateString()}</p>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{booking.userName}</p>
+                        <p className="text-sm text-gray-500">{booking.userEmail}</p>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{booking.courtName}</p>
+                        <p className="text-sm text-gray-500">{booking.facility}</p>
+                        <p className="text-sm text-gray-500">{booking.time}</p>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={getStatusBadge(booking.status)}>
+                        {booking.status}
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleView(booking)}>
-                        View
-                      </Button>
-                      {booking.status === 'Pending' && (
-                        <Button size="sm" onClick={() => handleConfirm(booking)}>
-                          Confirm
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">${booking.price}</p>
+                        <span className={getPaymentBadge(booking.paymentStatus)}>
+                          {booking.paymentStatus}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => handleView(booking)}>
+                          View
                         </Button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        {booking.status === 'Pending' && (
+                          <Button size="sm" onClick={() => handleConfirm(booking)}>
+                            Confirm
+                          </Button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

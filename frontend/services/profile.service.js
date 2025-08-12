@@ -1,4 +1,4 @@
-import axios from '../config/axios';
+import axios from '../src/config/axios';
 
 export const getProfile = async (userId) => {
     const res = await axios.get('/profile/owner-profile', { params: { userId } });
