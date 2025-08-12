@@ -6,7 +6,7 @@
 ---
 
 ## 🎥 Live Demo  
-[🔗 Watch the Project Demo Video]([https://youtu.be/NhhQkrnb_2c?si=O78JjiK2UPnAWJPx])
+[🔗 Watch the Project Demo Video](https://youtu.be/NhhQkrnb_2c?si=O78JjiK2UPnAWJPx)
 *(Click the link to see QuickCourt in action!)*
 
 ---
