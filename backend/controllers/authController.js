@@ -1,3 +1,4 @@
+
 import { signup as signupService, login as loginService, logout as logoutService } from '../services/authService.js';
 import { body, validationResult } from 'express-validator';
 import upload from '../middlewares/multerMiddleware.js';
@@ -10,9 +11,14 @@ const signup = [
   body('role').isIn(['user', 'facility_owner', 'admin']).withMessage('Invalid role'),
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
+      if (!req.file && req.body.avatar) {
+        throw new Error('Failed to upload avatar: Invalid file');
+      }
       const data = await signupService({
         email: req.body.email,
         password: req.body.password,
@@ -22,7 +28,8 @@ const signup = [
       });
       res.status(201).json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      console.error('Signup error:', error);
+      res.status(500).json({ message: error.message || 'Failed to process signup request' });
     }
   },
 ];

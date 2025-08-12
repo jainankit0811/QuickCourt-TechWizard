@@ -1,8 +1,12 @@
 import { Bell, Menu, Search, User } from 'lucide-react';
+import { authService } from '../services/auth.service';
 
 import PropTypes from 'prop-types';
 
 const Header = ({ onMenuClick }) => {
+
+    const user = authService.getCurrentUser();
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
       <div className="flex items-center justify-between">
@@ -35,7 +39,7 @@ const Header = ({ onMenuClick }) => {
               <User className="w-5 h-5 text-gray-600" />
             </div>
             <div className="hidden md:block">
-              <p className="text-sm font-medium text-gray-900">John Doe</p>
+              <p className="text-sm font-medium text-gray-900"> {user ? user.fullName : 'Guest'}</p>
               <p className="text-xs text-gray-500">Facility Owner</p>
             </div>
           </div>

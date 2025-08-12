@@ -6,6 +6,8 @@ import Dashboard from "../screen/owner/Dashboard.jsx";
 import FacilityManagement from "../screen/owner/FacilityManagement.jsx";
 import Profile from "../screen/owner/Profile.jsx";
 import TimeSlotManagement from "../screen/owner/TimeSlotManagement.jsx";
+import ProtectedRoute from '../components/ProctedRoute.jsx';
+
 const OwnerRoutes = () => {
     return (
         <div>
@@ -28,3 +30,4 @@ const OwnerRoutes = () => {
 }
 
 export default OwnerRoutes;
+
