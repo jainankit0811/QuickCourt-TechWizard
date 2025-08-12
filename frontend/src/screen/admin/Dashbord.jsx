@@ -579,7 +579,7 @@ const Dashboard = () => {
                     <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-auto">
                         <div className="p-6">
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-2xl font-bold">Dashboard Analytics Report</h2>
+                                <h2 className="text-2xl font-bold  text-black">Dashboard Analytics Report</h2>
                                 <button
                                     onClick={closeReport}
                                     className="text-gray-500 hover:text-gray-700"
@@ -591,13 +591,13 @@ const Dashboard = () => {
                             <div id="detailed-report">
                                 {/* Report Header */}
                                 <div className="report-header text-center mb-8">
-                                    <h1 className="text-3xl font-bold mb-2">Urban Athlete Analytics Report</h1>
+                                    <h1 className="text-3xl font-bold mb-2  text-black">QuickCourt Analytics Report</h1>
                                     <p className="text-gray-600">Generated on {new Date().toLocaleDateString()}</p>
                                 </div>
 
                                 {/* Executive Summary */}
                                 <div className="section mb-6">
-                                    <h2 className="text-xl font-semibold mb-4">Executive Summary</h2>
+                                    <h2 className="text-xl font-semibold mb-4  text-black">Executive Summary</h2>
                                     <div className="stats-grid">
                                         <div className="stat-card">
                                             <h3 className="font-semibold">Total Users</h3>
@@ -624,8 +624,8 @@ const Dashboard = () => {
 
                                 {/* Booking Activity Details */}
                                 <div className="section mb-6">
-                                    <h2 className="text-xl font-semibold mb-4">Booking Activity Analysis</h2>
-                                    <table className="data-table">
+                                    <h2 className="text-xl font-semibold mb-4  text-black ">Booking Activity Analysis</h2>
+                                    <table className="data-table  text-black">
                                         <thead>
                                             <tr>
                                                 <th>Month</th>
@@ -651,8 +651,8 @@ const Dashboard = () => {
 
                                 {/* User Registration Details */}
                                 <div className="section mb-6">
-                                    <h2 className="text-xl font-semibold mb-4">User Registration Trends</h2>
-                                    <table className="data-table">
+                                    <h2 className="text-xl font-semibold mb-4 text-black">User Registration Trends</h2>
+                                    <table className="data-table  text-black">
                                         <thead>
                                             <tr>
                                                 <th>Month</th>
@@ -679,8 +679,8 @@ const Dashboard = () => {
 
                                 {/* Sports Activity Details */}
                                 <div className="section mb-6">
-                                    <h2 className="text-xl font-semibold mb-4">Most Active Sports Breakdown</h2>
-                                    <table className="data-table">
+                                    <h2 className="text-xl font-semibold mb-4  text-black ">Most Active Sports Breakdown</h2>
+                                    <table className="data-table  text-black">
                                         <thead>
                                             <tr>
                                                 <th>Sport</th>
@@ -706,8 +706,8 @@ const Dashboard = () => {
 
                                 {/* Earnings Analysis */}
                                 <div className="section mb-6">
-                                    <h2 className="text-xl font-semibold mb-4">Earnings Analysis</h2>
-                                    <table className="data-table">
+                                    <h2 className="text-xl font-semibold mb-4  text-black">Earnings Analysis</h2>
+                                    <table className="data-table  text-black">
                                         <thead>
                                             <tr>
                                                 <th>Month</th>
@@ -732,9 +732,9 @@ const Dashboard = () => {
                                 </div>
 
                                 {/* Summary */}
-                                <div className="summary">
-                                    <h3 className="text-lg font-semibold mb-3">Key Insights</h3>
-                                    <ul className="list-disc pl-5 space-y-2">
+                                <div className="summary  text-black">
+                                    <h3 className="text-lg font-semibold mb-3  text-black">Key Insights</h3>
+                                    <ul className="list-disc pl-5 space-y-2v text-black">
                                         <li>Total platform users: {statsData.totalUsers.toLocaleString()}</li>
                                         <li>Total bookings processed: {statsData.bookings.toLocaleString()}</li>
                                         <li>Active sports facilities: {statsData.activeCourts.toLocaleString()}</li>
