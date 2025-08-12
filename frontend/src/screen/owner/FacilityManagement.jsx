@@ -2,6 +2,7 @@ import { Edit, MapPin, Plus, Trash2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
 import { addFacility, getFacilities } from '../../services/facility.service';
+import { Link } from 'react-router-dom';
 
 const FacilityManagement = () => {
   const [facilities, setFacilities] = useState([]);
@@ -54,6 +55,9 @@ const FacilityManagement = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Facility Management</h1>
+<button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 mt-5 border-2 border-black focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">                      <Link to="/facilities/create"><h2 className='text-gray-900 text-2xl'>Create</h2></Link>
+</button>
+
           <p className="text-gray-600 mt-1">Manage your sports facilities and their details</p>
         </div>
         <Button onClick={() => setShowForm(true)}>
@@ -65,7 +69,7 @@ const FacilityManagement = () => {
       {showForm && (
         <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6 ">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Add Facility</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Add Facility </h2> 
             <button onClick={() => setShowForm(false)}>
               <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>

@@ -15,12 +15,12 @@ const Sidebar = ({ isOpen, onToggle }) => {
   const location = useLocation();
 
   const menuItems = [
-    { path: '/', name: 'Dashboard', icon: Home },
-    { path: '/facilities', name: 'Facilities', icon: Building2 },
-    { path: '/courts', name: 'Courts', icon: Calendar },
-    { path: '/time-slots', name: 'Time Slots', icon: Clock },
-    { path: '/bookings', name: 'Bookings', icon: BookOpen },
-    { path: '/profile', name: 'Profile', icon: User },
+    { path: '/owner/', name: 'Dashboard', icon: Home },
+    { path: '/owner/facilities', name: 'Facilities', icon: Building2 },
+    { path: '/owner/courts', name: 'Courts', icon: Calendar },
+    { path: '/owner/time-slots', name: 'Time Slots', icon: Clock },
+    { path: '/owner/bookings', name: 'Bookings', icon: BookOpen },
+    { path: '/owner/profile', name: 'Profile', icon: User },
   ];
 
   const isActivePath = (path) => {

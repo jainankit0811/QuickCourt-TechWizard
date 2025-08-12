@@ -26,11 +26,19 @@ function Login() {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+    <div className="w-screen h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center">
+        <h2 className="text-3xl font-bold mb-4 text-center">Login</h2>
+
+        {/* Image directly below the title */}
+        <img
+          src="https://cdni.iconscout.com/illustration/premium/thumb/login-page-illustration-download-in-svg-png-gif-file-formats--app-developing-development-secure-mobile-webapp-and-pack-design-illustrations-3783954.png"
+          alt="Login Illustration"
+          className="mb-6 rounded-lg w-full object-cover"
+        />
+
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full">
           <input
             type="email"
             placeholder="Email"
@@ -38,7 +46,7 @@ function Login() {
               required: 'Email is required',
               pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
             })}
-            className="w-full px-4 py-2 border rounded-md text-black"
+className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -49,9 +57,13 @@ function Login() {
               required: 'Password is required',
               minLength: { value: 6, message: 'Password must be at least 6 characters' },
             })}
-            className="w-full px-4 py-2 border rounded-md text-black"
+className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+
+          <a href="/Signup" className="text-blue-600 text-sm underline block mb-2">
+            Already have an account?
+          </a>
 
           <button
             type="submit"

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../services/auth.service'; // Adjust the import path as necessary
+import { authService } from '../../services/auth.service';
 import { useState } from 'react';
 
 function Signup() {
@@ -32,44 +32,56 @@ function Signup() {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center">Sign Up</h2>
+    <div className="w-screen h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center">
+        <h2 className="text-3xl font-bold mb-4 text-center">Sign Up</h2>
+
+        {/* Image directly below the title */}
+        <img
+          src="https://t3.ftcdn.net/jpg/03/39/70/90/360_F_339709048_ZITR4wrVsOXCKdjHncdtabSNWpIhiaR7.jpg"
+          alt="Signup Illustration"
+          className="mb-6 rounded-lg w-full object-cover"
+        />
+
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" encType="multipart/form-data">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full" encType="multipart/form-data">
           <input
             type="text"
             placeholder="Full Name"
             {...register('fullName', { required: 'Full name is required' })}
-            className="w-full px-4 py-2 border rounded-md text-black"
+  className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
           />
           {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
 
-          <input
-            type="email"
-            placeholder="Email"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
-            })}
-            className="w-full px-4 py-2 border rounded-md text-black"
-          />
+         <input
+  type="email"
+  placeholder="Email"
+  {...register('email', {
+    required: 'Email is required',
+    pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' },
+  })}
+  className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
+/>
+
+
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
           <input
-            type="password"
-            placeholder="Password"
-            {...register('password', {
-              required: 'Password is required',
-              minLength: { value: 6, message: 'Password must be at least 6 characters' },
-            })}
-            className="w-full px-4 py-2 border rounded-md text-black"
-          />
+  type="password"
+  placeholder="Password"
+  {...register('password', {
+    required: 'Password is required',
+    minLength: { value: 6, message: 'Password must be at least 6 characters' },
+  })}
+  className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
+/>
+
+
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <select
             {...register('role', { required: 'User role is required' })}
-            className="w-full px-4 py-2 border rounded-md text-black"
+className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black bg-white"
           >
             <option value="">Select Role</option>
             <option value="user">User</option>
@@ -82,9 +94,13 @@ function Signup() {
             type="file"
             accept="image/jpeg,image/png"
             {...register('avatar')}
-            className="w-full px-4 py-2 border rounded-md text-black"
+className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition text-black"
           />
           {errors.avatar && <p className="text-red-500 text-sm">{errors.avatar.message}</p>}
+
+          <a href="/Login" className="text-blue-600 text-sm underline block mb-2">
+            Don't have an account?
+          </a>
 
           <button
             type="submit"
