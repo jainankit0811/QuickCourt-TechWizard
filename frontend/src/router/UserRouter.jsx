@@ -18,6 +18,7 @@ import ApproveFacility from '../screen/user/ApproveFacility.jsx'; // Make sure t
 import ProtectedRoute from '../components/ProctedRoute.jsx';
 import Header from '../screen/user/Leaflet.jsx';
 import LandingPage from '../screen/LandingPage.jsx';
+import Leaflet from '../screen/user/Leaflet.jsx';
 
 
 function UserRouter() {
@@ -53,8 +54,9 @@ function UserRouter() {
         <Route path="/facilities" element={<Facility />} />
         <Route path="/facilities/:id" element={<FacilityDetail />} />
         <Route path="/venueDetails" element={<VenueDetails />} />
-        <Route path="/Header" element={<Header/>} />
         <Route path="/venuePage" element={<VenuePage />} />
+        <Route path="/Leaflet" element={<Leaflet/>} />
+
         <Route
           path="/book/:id"
           element={

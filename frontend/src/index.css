@@ -8,6 +8,28 @@ body, html {
     overflow-x: hidden;
 }
 
+.scroll-container {
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+/* Scrollbar track */
+.scroll-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Scrollbar thumb */
+.scroll-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ff6ec4, #7873f5);
+  border-radius: 6px;
+}
+
+/* Scrollbar background */
+.scroll-container::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
