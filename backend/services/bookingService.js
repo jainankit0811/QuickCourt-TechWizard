@@ -1,5 +1,6 @@
-const Booking = require('../models/Booking');
-const Court = require('../models/Court');
+import Booking from '../models/Booking.js';
+import Court from '../models/Court.js';
+import redisClient from './redis.service.js';
 
 const createBooking = async ({ courtId, date, startTime, endTime }, userId) => {
   const court = await Court.findById(courtId).populate('facility');
@@ -25,7 +26,19 @@ const createBooking = async ({ courtId, date, startTime, endTime }, userId) => {
     totalPrice,
   });
   await booking.save();
+
+  await redisClient.del(`bookings:${userId}`);
   return booking;
+};
+
+const getUserBookings = async (userId) => {
+  const cacheKey = `bookings:${userId}`;
+  const cached = await redisClient.get(cacheKey);
+  if (cached) return JSON.parse(cached);
+
+  const bookings = await Booking.find({ user: userId }).populate('court facility');
+  await redisClient.setex(cacheKey, 3600, JSON.stringify(bookings));
+  return bookings;
 };
 
 const cancelBooking = async (bookingId, userId) => {
@@ -34,7 +47,9 @@ const cancelBooking = async (bookingId, userId) => {
   if (booking.status !== 'confirmed') throw new Error('Cannot cancel this booking');
   booking.status = 'cancelled';
   await booking.save();
+
+  await redisClient.del(`bookings:${userId}`);
   return booking;
 };
 
-module.exports = { createBooking, cancelBooking };
+export { createBooking, getUserBookings, cancelBooking };

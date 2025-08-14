@@ -1,5 +1,7 @@
+
 import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv';
+import fs from 'fs/promises';
 
 dotenv.config();
 
@@ -15,8 +17,12 @@ const uploadImage = async (filePath) => {
       folder: 'quickcourt',
       resource_type: 'image',
     });
+    // Delete temporary file after upload
+    await fs.unlink(filePath).catch((err) => console.error(`Failed to delete temp file ${filePath}:`, err));
     return result.secure_url;
   } catch (error) {
+    // Delete file on error to avoid orphaned files
+    await fs.unlink(filePath).catch((err) => console.error(`Failed to delete temp file ${filePath}:`, err));
     throw new Error(`Cloudinary upload failed: ${error.message}`);
   }
 };
