@@ -16,7 +16,10 @@ const Sidebar = ({ isOpen, onToggle }) => {
 
   const menuItems = [
     { path: '/owner/', name: 'Dashboard', icon: Home },
-    { path: '/owner/facilities', name: 'Facilities', icon: Building2 },
+{ path: '/owner/facilities', name: 'Facility Management', icon: Building2 },
+{ path: '/owner/facilities/create', name: '➤ Create Facility', icon: Building2 },
+{ path: '/facilities/detail/:id', name: '➤ Deatil Facility', icon: Building2 },
+{ path: '/facilities/list', name: '➤ facilities/list', icon: Building2 },
     { path: '/owner/courts', name: 'Courts', icon: Calendar },
     { path: '/owner/time-slots', name: 'Time Slots', icon: Clock },
     { path: '/owner/bookings', name: 'Bookings', icon: BookOpen },

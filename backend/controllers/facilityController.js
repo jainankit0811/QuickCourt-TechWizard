@@ -8,6 +8,7 @@ import {
 
 import { body, param, validationResult } from 'express-validator';
 import upload from '../middlewares/multerMiddleware.js';
+import { uploadImage } from '../services/cloudinary.service.js';
 
 const createFacility = [
   upload.array('photos', 5),

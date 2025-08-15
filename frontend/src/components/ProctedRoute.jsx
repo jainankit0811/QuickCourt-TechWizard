@@ -3,7 +3,10 @@ import { authService } from '../services/auth.service';
 
 function ProtectedRoute({ children, roles }) {
   const user = authService.getCurrentUser();
+  console.log(user);
+  
   const isAuthenticated = authService.isAuthenticated();
+console.log(isAuthenticated);
 
   if (!isAuthenticated) {
     console.log('ProtectedRoute: Redirecting to /login - Not authenticated');
