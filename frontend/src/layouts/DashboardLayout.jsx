@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import OwnerSidebar from '../components/OwnerSidebar';
 
 
 const DashboardLayout = () => {
@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+      <OwnerSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">

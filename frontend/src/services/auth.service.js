@@ -113,7 +113,7 @@ export const facilityService = {
           formData.append(key, facilityData[key]);
         }
       });
-      const response = await axios.post('http://localhost:3001/facilities/', formData, {
+      const response = await axios.post('http://localhost:3001/facilities', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;

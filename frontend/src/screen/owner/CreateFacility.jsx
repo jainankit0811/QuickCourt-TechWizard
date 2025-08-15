@@ -12,20 +12,24 @@ function CreateFacility() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
-  const onSubmit = async (data) => {
-    try {
-      await facilityService.createFacility({
-        name: data.name,
-        location: data.location,
-        sportsSupported: data.sportsSupported.split(',').map((s) => s.trim()),
-        photos: data.photos,
-      });
-      alert('Facility created successfully!');
-      navigate('/owner');
-    } catch (err) {
-      setError(err);
-    }
-  };
+ const onSubmit = async (data) => {
+  try {
+    const photoFiles = Array.from(data.photos); // Convert FileList to array
+
+    await facilityService.createFacility({
+      name: data.name,
+      location: data.location,
+      sportsSupported: data.sportsSupported.split(',').map((s) => s.trim()),
+      photos: photoFiles,
+    });
+
+    alert('Facility created successfully!');
+    navigate('/owner');
+  } catch (err) {
+    setError(err);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center overflow-hidden">

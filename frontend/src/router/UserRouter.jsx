@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CourtBooking from '../screen/user/CourtBooking.jsx';
+import CourtBooking from '../screen/owner/CourtBooking.jsx';
 import Home from '../screen/user/Home.jsx';
 import Login from '../screen/user/Login.jsx';
 import MyBookings from '../screen/user/MyBookings.jsx';
@@ -7,14 +7,14 @@ import Profile from '../screen/user/Profile.jsx';
 import Signup from '../screen/user/Signup.jsx';
 import VenueDetails from '../screen/user/VenueDetail.jsx';
 import VenuePage from '../screen/user/VenuePage.jsx';
-import Facility from '../screen/user/FacilityList.jsx';
-import FacilityDetail from '../screen/user/FacilityDetails.jsx';
-import CreateFacility from '../screen/user/CreateFacility.jsx';
-import UpdateFacility from '../screen/user/UpdateFacility.jsx';
-import CreateCourt from '../screen/user/CreateCourt.jsx';
-import UpdateCourt from '../screen/user/UpdateCourt.jsx';
-import BlockTimeSlot from '../screen/user/BlockTimeSlot.jsx';
-import ApproveFacility from '../screen/user/ApproveFacility.jsx'; // Make sure this is imported
+import Facility from '../screen/owner/FacilityList.jsx';
+import FacilityDetail from '../screen/owner/FacilityDetails.jsx';
+import CreateFacility from '../screen/owner/CreateFacility.jsx';
+import UpdateFacility from '../screen/owner/UpdateFacility.jsx';
+import CreateCourt from '../screen/owner/CreateCourt.jsx';
+import UpdateCourt from '../screen/owner/UpdateCourt.jsx';
+import BlockTimeSlot from '../screen/owner/BlockTimeSlot.jsx';
+import ApproveFacility from '../screen/owner/ApproveFacility.jsx'; // Make sure this is imported
 import ProtectedRoute from '../components/ProctedRoute.jsx';
 import Header from '../screen/user/Leaflet.jsx';
 import LandingPage from '../screen/LandingPage.jsx';
@@ -78,14 +78,6 @@ function UserRouter() {
           element={
             <ProtectedRoute roles={['user', 'facility_owner', 'admin']}>
               <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/facilities/create"
-          element={
-            <ProtectedRoute roles={['facility_owner']}>
-              <CreateFacility />
             </ProtectedRoute>
           }
         />
