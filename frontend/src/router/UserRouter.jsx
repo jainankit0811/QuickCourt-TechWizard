@@ -23,36 +23,15 @@ import Leaflet from '../screen/user/Leaflet.jsx';
 
 function UserRouter() {
   return (
-    <div className='min-w-screen bg-white'>
-      <BrowserRouter>
-        {/* <Routes>
-          <Route path="/user" element={<Home />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/Login" element={<Login />} />
+   <>
+    
+       
 
-          <Route path="/facilities" element={<Facility />} />
-          <Route path="/facilities/:id" element={<FacilityDetail />} />
-<Route path="/facilities/create" element={<CreateFacility />} />
-          <Route path="/facilities/:id/update" element={<UpdateFacility />} />
-          <Route path="/facilities/approve/:id" element={<ApproveFacility />} />
-          <Route path="/courts/create" element={<CreateCourt />} />
-          <Route path="/courts/:id/update" element={<UpdateCourt />} />
-          <Route path="/courts/:courtId/block-slot" element={<BlockTimeSlot />} />
-
-          <Route path="/venueDetails" element={<VenueDetails />} />
-          <Route path="/venuePage" element={<VenuePage />} />
-          <Route path="/book/:id" element={<CourtBooking />} />
-          <Route path="/my-bookings" element={<MyBookings />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes> */}
-
-              <Routes>
         <Route path="/" element={<LandingPage/>} />
         <Route path="/user" element={<Home />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/facilities" element={<Facility />} />
-        <Route path="/facilities/:id" element={<FacilityDetail />} />
         <Route path="/venueDetails" element={<VenueDetails />} />
         <Route path="/venuePage" element={<VenuePage />} />
         <Route path="/Leaflet" element={<Leaflet/>} />
@@ -81,14 +60,7 @@ function UserRouter() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/facilities/:id/update"
-          element={
-            <ProtectedRoute roles={['facility_owner']}>
-              <UpdateFacility />
-            </ProtectedRoute>
-          }
-        />
+       
         <Route
           path="/courts/create"
           element={
@@ -96,7 +68,7 @@ function UserRouter() {
               <CreateCourt />
             </ProtectedRoute>
           }
-        />
+          />
         <Route
           path="/courts/:id/update"
           element={
@@ -121,10 +93,11 @@ function UserRouter() {
             </ProtectedRoute>
           }
         />
-      </Routes>
+      
+          </>
 
-      </BrowserRouter>
-    </div>
+    
+    
   );
 }
 

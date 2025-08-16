@@ -16,7 +16,17 @@ const getAllVenues = async (filters = {}) => {
   const cached = await redisClient.get(cacheKey);
   if (cached) return JSON.parse(cached);
 
-  const query = { status: 'approved', ...filters };
+  // ✅ Sanitize filters
+  const allowedFilters = ['location', 'sportsSupported'];
+  const sanitizedFilters = {};
+
+  for (const key of allowedFilters) {
+    if (filters[key]) {
+      sanitizedFilters[key] = filters[key];
+    }
+  }
+
+  const query = { status: 'approved', ...sanitizedFilters };
   const venues = await Facility.find(query).populate('owner');
   await redisClient.setex(cacheKey, 3600, JSON.stringify(venues));
   return venues;
@@ -27,7 +37,7 @@ const getVenueById = async (id) => {
   const cached = await redisClient.get(cacheKey);
   if (cached) return JSON.parse(cached);
 
-  const venue = await Facility.findById(id).populate('owner');
+  const venue = await Facility.findById(id).populate('owner'); // ✅ fixed
   if (!venue) throw new Error('Venue not found');
   await redisClient.setex(cacheKey, 3600, JSON.stringify(venue));
   return venue;
