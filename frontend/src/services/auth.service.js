@@ -154,12 +154,21 @@ export const facilityService = {
 };
 
 export const courtService = {
-  getCourtById: async (id) => {
+ getCourtById: async (id) => {
     try {
       const response = await axios.get(`http://localhost:3001/courts/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data?.message || 'Failed to fetch court';
+    }
+  },
+
+  getAllCourtsByFacility: async (facilityId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/courts/facility/${facilityId}`);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data?.message || 'Failed to fetch courts';
     }
   },
 

@@ -1,7 +1,9 @@
 import {
-  createCourt as createCourtService,
-  updateCourt as updateCourtService,
   blockTimeSlot as blockTimeSlotService
+} from '../services/courtService.js';
+import {
+  createCourtService,
+  updateCourtService,
 } from '../services/courtService.js';
 import { body, param, validationResult } from 'express-validator';
 
@@ -11,17 +13,24 @@ const createCourt = [
   body('pricePerHour').isFloat({ min: 0 }).withMessage('Invalid price'),
   body('facilityId').isMongoId().withMessage('Invalid facility ID'),
   async (req, res) => {
+    console.log('Received createCourt request:', req.body);
+    console.log('User ID:', req.user?._id);
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
       const court = await createCourtService(req.body, req.user._id);
       res.status(201).json(court);
     } catch (error) {
+      console.error('createCourt error:', error.message);
       res.status(400).json({ message: error.message });
     }
   }
 ];
+
 
 const updateCourt = [
   param('id').isMongoId().withMessage('Invalid court ID'),
@@ -41,6 +50,7 @@ const updateCourt = [
   }
 ];
 
+
 const blockTimeSlot = [
   param('courtId').isMongoId().withMessage('Invalid court ID'),
   body('date').isISO8601().toDate().withMessage('Invalid date'),
@@ -59,4 +69,7 @@ const blockTimeSlot = [
   }
 ];
 
-export { createCourt, updateCourt, blockTimeSlot };
+
+
+
+export { createCourt,blockTimeSlot, updateCourt };

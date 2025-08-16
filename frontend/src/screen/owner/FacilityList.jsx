@@ -13,7 +13,7 @@ function FacilityList() {
         const data = await facilityService.getAllVenues();
         setVenues(data);
       } catch (err) {
-        setError(err);
+        setError(err.message || 'Failed to fetch venues');
       }
     };
     fetchVenues();
@@ -40,12 +40,20 @@ function FacilityList() {
               <h3 className="text-lg font-semibold">{venue.name}</h3>
               <p>Location: {venue.location}</p>
               <p>Sports: {venue.sportsSupported.join(', ')}</p>
-              <button
-                onClick={() => navigate(`/owner/facilities/${venue._id}`)}
-                className="mt-2 text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
-              >
-                View Details
-              </button>
+              <div className="mt-2 space-x-2">
+                <button
+                  onClick={() => navigate(`/owner/facilities/${venue._id}`)}
+                  className="text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
+                >
+                  View Details
+                </button>
+<button
+  onClick={() => navigate(`/owner/court/${venue._id}`, { state: { facility: venue } })}
+  className="text-black bg-green-600 hover:bg-green-700 rounded-lg px-4 py-2"
+>
+  Court Management
+</button>
+              </div>
             </div>
           ))}
         </div>
