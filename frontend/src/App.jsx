@@ -1,14 +1,16 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes } from "react-router-dom";
 import AdminRoutes from "./router/AdminRoutes";
 import OwnerRoutes from "./router/OwnerRoutes";
-import UserRouter from "./router/UserRouter";
+import UserRoutes from "./router/UserRouter"; // Rename to match others
 
 const App = () => {
   return (
     <BrowserRouter>
-      <OwnerRoutes />
-      {/* <UserRouter /> */}
-      {/* <AdminRoutes /> */}
+      <Routes>
+        {AdminRoutes()}
+        {OwnerRoutes()}
+        {UserRoutes()}
+      </Routes>
     </BrowserRouter>
   );
 };

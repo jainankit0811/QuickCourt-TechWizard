@@ -13,7 +13,8 @@ import FacilityList from "../screen/owner/FacilityList.jsx";
 
 const OwnerRoutes = () => {
     return (
-<Routes>
+      <>
+      
   <Route path="/owner" element={<DashboardLayout />}>
     {/* Dashboard at /owner */}
     <Route index element={<Dashboard />} />
@@ -29,9 +30,13 @@ const OwnerRoutes = () => {
           <CreateFacility />
         </ProtectedRoute>
       }
-    />
+      />
+      <Route path="facilitieslist" element={        <ProtectedRoute roles={['facility_owner']}>
+          <FacilityList />
+        </ProtectedRoute>
+} />
     <Route
-      path="facilities/detail/:id"
+      path="facilities/:id"
       element={
         <ProtectedRoute roles={['facility_owner']}>
           <FacilityDetail />
@@ -41,7 +46,6 @@ const OwnerRoutes = () => {
 
     {/* Courts at /owner/courts */}
     <Route path="courts" element={<CourtManagement />} />
-    <Route path="facilities/list" element={<FacilityList />} />
 
     {/* Time Slots at /owner/time-slots */}
     <Route path="time-slots" element={<TimeSlotManagement />} />
@@ -52,7 +56,7 @@ const OwnerRoutes = () => {
     {/* Profile at /owner/profile */}
     <Route path="profile" element={<Profile />} />
   </Route>
-</Routes>
+        </>
     );
 }
 

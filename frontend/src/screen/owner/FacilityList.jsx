@@ -41,8 +41,8 @@ function FacilityList() {
               <p>Location: {venue.location}</p>
               <p>Sports: {venue.sportsSupported.join(', ')}</p>
               <button
-                onClick={() => navigate(`/facilities/${venue._id}`)}
-                className="mt-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
+                onClick={() => navigate(`/owner/facilities/${venue._id}`)}
+                className="mt-2 text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
               >
                 View Details
               </button>
