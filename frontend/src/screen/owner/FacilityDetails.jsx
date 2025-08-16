@@ -42,7 +42,7 @@ function FacilityDetail() {
         <p><strong>Owner:</strong> {venue.owner?.fullName || 'Unknown'}</p>
         <button
           onClick={() => navigate('/facilities')}
-          className="mt-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
+          className="mt-4 text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
         >
           Back to Venues
         </button>
