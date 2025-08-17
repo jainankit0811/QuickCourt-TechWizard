@@ -19,7 +19,6 @@ const Sidebar = ({ isOpen, onToggle }) => {
 { path: '/owner/facilities', name: 'Facility Management', icon: Building2 },
 { path: '/owner/facilities/create', name: '➤ Create Facility', icon: Building2 },
 { path: '/owner/facilitieslist', name: '➤ facilities/list', icon: Building2 },
-{ path: '/owner/facilities/:id', name: '➤ Deatil Facility', icon: Building2 },
     { path: '/owner/courts', name: 'Courts', icon: Calendar },
     { path: '/owner/time-slots', name: 'Time Slots', icon: Clock },
     { path: '/owner/bookings', name: 'Bookings', icon: BookOpen },

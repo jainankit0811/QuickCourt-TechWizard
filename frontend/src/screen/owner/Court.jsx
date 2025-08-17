@@ -13,7 +13,7 @@ function CourtManagement() {
   useEffect(() => {
     const fetchCourts = async () => {
       if (!facilityId) {
-        console.error('facilityId is undefined'); // Debug
+        console.error('facilityId is undefined');
         setError('No facility ID provided');
         return;
       }
@@ -36,7 +36,7 @@ function CourtManagement() {
         No facility ID provided. Please select a facility from the list.
         <button
           onClick={() => navigate('/owner')}
-          className="mt-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
+          className="mt-2 text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2"
         >
           Go to Facility List
         </button>
@@ -55,7 +55,7 @@ function CourtManagement() {
       <div className="mb-6">
         <button
           onClick={() => navigate(`/owner/courts/create`, { state: { facility } })}
-          className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 mr-2"
+          className="text-black bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 mr-2"
         >
           Add New Court
         </button>
@@ -72,12 +72,20 @@ function CourtManagement() {
               <p>
                 Operating Hours: {court.operatingHours.start} - {court.operatingHours.end}
               </p>
-              <button
-                onClick={() => navigate(`/owner/courts/update/${court._id}`, { state: { facility, court } })}
-                className="mt-2 text-black bg-yellow-600 hover:bg-yellow-700 rounded-lg px-4 py-2"
-              >
-                Update Court
-              </button>
+              <div className="mt-2 space-x-2">
+                <button
+                  onClick={() => navigate(`/owner/courts/update/${court._id}`, { state: { facility, court } })}
+                  className="text-black bg-yellow-600 hover:bg-yellow-700 rounded-lg px-4 py-2"
+                >
+                  Update Court
+                </button>
+                <button
+                  onClick={() => navigate(`/owner/courts/block/${court._id}`, { state: { facility, court } })}
+                  className="text-black bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2"
+                >
+                  Block Time Slot
+                </button>
+              </div>
             </div>
           ))}
         </div>

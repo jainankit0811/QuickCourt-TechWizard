@@ -192,9 +192,12 @@ export const courtService = {
 
   blockTimeSlot: async (courtId, slotData) => {
     try {
+      console.log('Sending block time slot request:', { courtId, slotData }); // Debug
       const response = await axios.post(`http://localhost:3001/courts/${courtId}/block-slot`, slotData);
+      console.log('Block time slot response:', response.data); // Debug
       return response.data;
     } catch (error) {
+      console.error('courtService.blockTimeSlot error:', error.response?.data);
       throw error.response?.data?.message || 'Failed to block time slot';
     }
   },
