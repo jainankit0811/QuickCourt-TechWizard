@@ -12,6 +12,7 @@ import FacilityDetail from "../screen/owner/FacilityDetails.jsx";
 import FacilityList from "../screen/owner/FacilityList.jsx";
 import CreateCourt from "../screen/owner/CreateCourt.jsx";
 import Court from "../screen/owner/Court.jsx";
+import BlockTimeSlot from "../screen/owner/BlockTimeSlot.jsx";
 
 const OwnerRoutes = () => {
     return (
@@ -53,9 +54,18 @@ const OwnerRoutes = () => {
         </ProtectedRoute>
       }
     />
+    <Route
+      path="courts/block/:courtId"
+      element={
+        <ProtectedRoute roles={['facility_owner']}>
+          <BlockTimeSlot/>
+        </ProtectedRoute>
+      }
+    />
 
     {/* Courts at /owner/courts */}
     <Route path="courts" element={<CourtManagement />} />
+
 
     <Route
       path="courts/create"

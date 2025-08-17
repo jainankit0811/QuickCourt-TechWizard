@@ -1,10 +1,12 @@
-import {
-  blockTimeSlot as blockTimeSlotService
-} from '../services/courtService.js';
+// import {
+//   blockTimeSlot as blockTimeSlotService
+// } from '../services/courtService.js';
 import {
   createCourtService,
   updateCourtService,
+  blockTimeSlotService
 } from '../services/courtService.js';
+import TimeSlot from '../models/TimeSlot.js';
 import { body, param, validationResult } from 'express-validator';
 
 const createCourt = [
@@ -54,22 +56,45 @@ const updateCourt = [
 const blockTimeSlot = [
   param('courtId').isMongoId().withMessage('Invalid court ID'),
   body('date').isISO8601().toDate().withMessage('Invalid date'),
-  body('startTime').matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Invalid start time'),
-  body('endTime').matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Invalid end time'),
+  body('time').matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Invalid time format'),
+  body('status').optional().isIn(['available', 'booked', 'maintenance']).withMessage('Invalid status'),
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
-      const court = await blockTimeSlotService(req.params.courtId, req.body, req.user._id);
-      res.status(200).json(court);
+      const timeSlot = await blockTimeSlotService(req.params.courtId, req.body, req.user._id);
+      res.status(201).json(timeSlot);
     } catch (error) {
+      console.error('blockTimeSlot error:', error.message);
       res.status(400).json({ message: error.message });
     }
   }
 ];
 
+const getTimeSlotsByCourt = [
+  param('courtId').isMongoId().withMessage('Invalid court ID'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
+      return res.status(400).json({ errors: errors.array() });
+    }
 
+    try {
+      const { courtId } = req.params;
+      console.log('getTimeSlotsByCourt - courtId:', courtId);
+      const timeSlots = await getTimeSlotsByCourtService(courtId);
+      console.log('Found time slots:', timeSlots);
+      res.status(200).json(timeSlots);
+    } catch (error) {
+      console.error('getTimeSlotsByCourt error:', error.message);
+      res.status(400).json({ message: error.message });
+    }
+  }
+];
 
-
-export { createCourt,blockTimeSlot, updateCourt };
+export { createCourt,blockTimeSlot, updateCourt, getTimeSlotsByCourt };
