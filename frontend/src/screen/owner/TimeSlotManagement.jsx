@@ -31,7 +31,7 @@ const TimeSlotManagement = () => {
     { time: '7:00 PM', status: 'available' },
     { time: '8:00 PM', status: 'booked' },
     { time: '9:00 PM', status: 'available' },
-    { time: '10:00 PM', status: 'available' }
+    { time: '11:00 PM', status: 'available' }
   ];
 
   const getSlotColor = (status) => {
