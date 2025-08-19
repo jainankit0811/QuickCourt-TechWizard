@@ -128,15 +128,7 @@ const Footer = () => {
           </div>
           
           {/* Map Link */}
-          <div className="mt-6 text-center">
-            <a
-              href="/leaflet"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-            >
-              <MapPin size={18} />
-              <span>View Interactive Map</span>
-            </a>
-          </div>
+         
         </div>
       </div>
     </footer>

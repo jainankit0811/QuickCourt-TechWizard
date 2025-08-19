@@ -1,57 +1,66 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Users, TrendingUp } from 'lucide-react';
+import { facilityService } from '../../services/auth.service.js';
+import { useNavigate } from 'react-router-dom';
 
 const PopularSports = () => {
-  const sports = [
-    {
-      id: 1,
-      name: 'Cricket',
-      image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '2.5K+',
-      venues: '150+',
-      trending: true
-    },
-    {
-      id: 2,
-      name: 'Football',
-      image: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '1.8K+',
-      venues: '120+',
-      trending: true
-    },
-    {
-      id: 3,
-      name: 'Badminton',
-      image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '3.2K+',
-      venues: '200+',
-      trending: false
-    },
-    {
-      id: 4,
-      name: 'Tennis',
-      image: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '1.5K+',
-      venues: '80+',
-      trending: false
-    },
-    {
-      id: 5,
-      name: 'Basketball',
-      image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '900+',
-      venues: '60+',
-      trending: true
-    },
-    {
-      id: 6,
-      name: 'Swimming',
-      image: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
-      players: '1.2K+',
-      venues: '40+',
-      trending: false
-    }
-  ];
+  const [sports, setSports] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchApprovedVenues = async () => {
+      try {
+        setLoading(true);
+        const venues = await facilityService.getAllVenues({ status: 'approved' });
+        console.log('Fetched venues:', venues); // Debug log
+        // Aggregate venues by sport and select a representative photo
+        const sportCounts = {};
+        venues.forEach((venue) => {
+          venue.sportsSupported.forEach((sport) => {
+            if (!sportCounts[sport]) {
+              sportCounts[sport] = {
+                name: sport,
+                venues: 0,
+                players: 0,
+                photo: venue.photos && venue.photos.length > 0 ? venue.photos[0] : null,
+              };
+            }
+            sportCounts[sport].venues += 1;
+            sportCounts[sport].players = sportCounts[sport].venues * 100; // Arbitrary calculation
+            // Use the first available photo if not already set
+            if (!sportCounts[sport].photo && venue.photos && venue.photos.length > 0) {
+              sportCounts[sport].photo = venue.photos[0];
+            }
+          });
+        });
+        const sportList = Object.values(sportCounts).sort((a, b) => b.venues - a.venues).slice(0, 6); // Top 6 sports
+        setSports(sportList.map((sport, index) => ({
+          id: index + 1,
+          name: sport.name,
+          image: sport.photo || 'https://via.placeholder.com/300?text=' + sport.name, // Fallback to placeholder
+          players: sport.players + '+',
+          venues: sport.venues + '+',
+          trending: index < 3,
+        })));
+      } catch (err) {
+        console.error('Error fetching venues:', err); // Debug log
+        setError(err.message || 'Failed to fetch venues');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchApprovedVenues();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-10">{error}</div>;
+  }
 
   return (
     <section id="sports" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
@@ -59,10 +68,10 @@ const PopularSports = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Popular <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Sports</span>
+            Popular <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Sports</span> in 2025
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Join thousands of players in your favorite sports. From cricket to swimming, find your game today
+            Join thousands of players in your favorite sports. From football to golf, find your game today
           </p>
         </div>
 
@@ -79,6 +88,10 @@ const PopularSports = () => {
                   src={sport.image}
                   alt={sport.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    console.error(`Failed to load image for ${sport.name}: ${sport.image}`);
+                    e.target.src = 'https://via.placeholder.com/300?text=' + sport.name; // Fallback on error
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                 
@@ -111,7 +124,10 @@ const PopularSports = () => {
 
               {/* Action Button */}
               <div className="p-6">
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 font-semibold">
+                <button 
+                  onClick={() => navigate('/venues', { state: { sport: sport.name } })}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 font-semibold"
+                >
                   Find {sport.name} Venues
                 </button>
               </div>

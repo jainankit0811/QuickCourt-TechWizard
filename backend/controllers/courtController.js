@@ -97,4 +97,33 @@ const getTimeSlotsByCourt = [
   }
 ];
 
+// const getAllCourtsByFacilityPublic = async (req, res) => {
+//   try {
+//     const { facilityId } = req.params;
+//     const facility = await Facility.findById(facilityId);
+//     if (!facility || facility.status !== 'approved') {
+//       throw new Error('Facility not found or not approved');
+//     }
+//     const courts = await Court.find({ facility: facilityId });
+//     res.status(200).json(courts);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+// const getTimeSlotsByCourtPublic = async (req, res) => {
+//   try {
+//     const { courtId } = req.params;
+//     const court = await Court.findById(courtId).populate('facility');
+//     if (!court || court.facility.status !== 'approved') {
+//       throw new Error('Court not found or facility not approved');
+//     }
+//     const timeSlots = await TimeSlot.find({ court: courtId });
+//     res.status(200).json(timeSlots);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+
 export { createCourt,blockTimeSlot, updateCourt, getTimeSlotsByCourt };

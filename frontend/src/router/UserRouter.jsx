@@ -19,6 +19,7 @@ import ProtectedRoute from '../components/ProctedRoute.jsx';
 import Header from '../screen/user/Leaflet.jsx';
 import LandingPage from '../screen/LandingPage.jsx';
 import Leaflet from '../screen/user/Leaflet.jsx';
+import UserVenues from '../components/UI/UserVenues.jsx';
 
 
 function UserRouter() {
@@ -29,6 +30,7 @@ function UserRouter() {
 
         <Route path="/" element={<LandingPage/>} />
         <Route path="/user" element={<Home />} />
+        <Route path="/venues" element={<UserVenues/>} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/facilities" element={<Facility />} />
